@@ -1,0 +1,16 @@
+/*
+ * This file is part of Libatom.
+ * 
+ * Copyright (c) 2012 Alexandre Quessy
+ * 
+ */
+
+/** @file
+ * Provides version info for libatom.
+ */
+#ifndef __VERSION_H__
+#define __VERSION_H__
+
+#define ATOM_VERSION    "@PACKAGE_VERSION@"
+
+#endif // __VERSION_H__

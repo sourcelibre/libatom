@@ -1,0 +1,51 @@
+Libatom is a generic container for values.
+
+For more information, contact one of the authors:
+
+ * Alexandre Quessy <alexandre@quessy.net>
+
+Additional Documentation
+------------------------
+
+http://code.sat.qc.ca/doc/libatom/latest
+
+License
+-------
+
+Free software released under the LGPL.
+
+Version numbers
+---------------
+
+Atom uses the common "Linux kernel" versioning system, where even-numbered minor versions are stable and odd-numbered minor versions are development snapshots.
+
+The micro version indicates the origin of the release: even micro numbers are only used for released archives; odd micro numbers are only used on the Git repository.
+
+A stable series means that the command-line options and the interactive keyboard controls should not change much for all tags whose version number start with the same major-minor numbers. Some new features might be developped in that branch, but each release should be backward-compatible with their ancestor. Releases from a stable series should be use for production. 
+
+In contrast, unstable branches consist of tags which are developer snapshots. They are not expected to be compatible with any other version. Some features might change between different stable branches.
+
+
+Installing
+----------
+
+This library uses the GNU Autotools. It should be easy to build and install it like this:
+
+ $ ./configure
+ $ make
+ $ sudo make install
+gg
+NOTE: If building from a git checkout, you should run ./autogen.sh first.
+
+On GNU/Linux, you need to install the following software: 
+ * The GNU Autotools
+ * liblo-dev
+
+
+Documentation
+-------------
+
+We use Doxygen to build the HTML documentation. To build it, install doxygen and type:
+
+ $ make html
+
