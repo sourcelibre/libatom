@@ -1,22 +1,13 @@
 SUBDIRS = tests
 
 AM_CXXFLAGS = \
-    $(LOG4CPP_CFLAGS) \
-    $(BOOST_CPPFLAGS) \
-    $(LIBXML_CFLAGS) \
     $(LIBLO_CFLAGS) \
     -I$(top_srcdir)
 
 # XXX BOOST_FILESYSTEM_LIBS must be after BOOST_SYSTEM_LIBS
 
 AM_LIBS = \
-    $(BOOST_LIBS)  \
-    $(BOOST_SYSTEM_LIBS) \
-    $(BOOST_FILESYSTEM_LIBS) \
-    $(BOOST_THREAD_LIBS) \
-    $(LIBLO_LIBS) \
-    $(LIBXML_LIBS) \
-    $(LOG4CPP_LIBS)
+    $(LIBLO_LIBS)
 
 # this file is not installed, just included by .cpp files at compile time.
 EXTRA_DIST = config.h

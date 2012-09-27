@@ -57,51 +57,6 @@ AC_CHECK_FUNCS([gettimeofday memmove mkdir setenv sqrt strchr strpbrk uname])
 
 AX_PTHREAD
 
-# Beware! From now on, we might modify the CXXFLAGS and LDFLAGS.
-# --------------------------------------------------------------
-
-AC_TRY_COMPILE([#include <sys/types.h>
-        #include <regex.h>],[  int i; 
-        regex_t r;
-        int cflags = REG_EXTENDED;
-       const char *s = "abc";
-       i = regcomp(&r,s,cflags);
-       regfree(&r);
-       ]; , have_regex=yes, have_regex=no)
-if test "$have_regex" = yes; then
-   AC_DEFINE(HAVE_REGEX,1,[Defined if found regex support. ])
-fi
-
-# Special cases
-case "$host" in *-darwin* | *-macos10*)
-  LIBTOOL="glibtool"
-  CXXFLAGS+=" -D__Darwin"
-  LDFLAGS+=" -undefined dynamic_lookup -Wl,-headerpad_max_install_names"
-  if test -d /opt/local ; then
-    CXXFLAGS+=" -I/usr/local/include -I/opt/local/include"
-    #LDFLAGS+=" -L/usr/local/lib -L/opt/local/lib"
-  elif test -d /sw ; then
-    CXXFLAGS+=" -I/sw/include"
-    #LDFLAGS+=" -L/sw/lib"
-  fi
-  # OSX does not include /usr/local/lib/pkgconfig path, so we export it here
-  # (for everyone, just in case)
-  PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-  export PKG_CONFIG_PATH
-  LDFLAGS+=" -fPIC -L/usr/local/lib -L/usr/local/lib64"
-  ;;
-esac
-
-AC_ARG_ENABLE([universal],
-    AS_HELP_STRING([--enable-universal], [Enables a universal i386 / x86_64 build on OSX]),
-    [universal_build=$enableval],
-    [universal_build=no])
-
-if test "x$universal_build" = xyes; then
-    CXXFLAGS+=" -arch i386 -arch x86_64"
-    LDFLAGS+=" -arch i386 -arch x86_64"
-fi
-
 #CXXFLAGS+=" -g3 -ggdb -Wall -Wextra -Wfatal-errors"
 CXXFLAGS+=" -Wall -Wextra -Wfatal-errors -Werror -Wnon-virtual-dtor "
 
@@ -110,42 +65,6 @@ PKG_CHECK_MODULES(LIBLO, liblo, have_liblo=true, have_liblo=false)
 if test "x${have_liblo}" = "xfalse" ; then
     AC_MSG_ERROR([Missing liblo])
 fi
-
-# libxml2
-PKG_CHECK_MODULES([LIBXML], [libxml-2.0], have_libxml=true, have_libxml=false)
-if test "x${have_libxml}" = "xfalse" ; then
-    AC_MSG_ERROR([missing package: libxml2-dev])
-fi
-
-# log4cpp
-PKG_CHECK_MODULES([LOG4CPP], [log4cpp], have_log4cpp=true, have_log4cpp=false)
-if test "x${have_log4cpp}" = "xfalse" ; then
-    AC_MSG_ERROR([missing package: liblog4cpp5-dev])
-fi
-
-BOOST_REQUIRE([1.35])
-BOOST_REGEX
-BOOST_SIGNALS
-BOOST_SYSTEM
-BOOST_THREADS
-
-dnl AC_MSG_NOTICE([BOOST_LDFLAGS:              ${BOOST_LDFLAGS}])
-AC_MSG_NOTICE([BOOST_CPPFLAGS:             ${BOOST_CPPFLAGS}])
-AC_MSG_NOTICE([BOOST_SIGNALS_LIBS:         ${BOOST_SIGNALS_LIBS}])
-AC_MSG_NOTICE([BOOST_SYSTEM_LIBS:          ${BOOST_SYSTEM_LIBS}])
-AC_MSG_NOTICE([BOOST_THREAD_LIBS:         ${BOOST_THREAD_LIBS}])
-
-# GNU help2man creates man pages from --help output; in many cases, this
-# is sufficient, and obviates the need to maintain man pages separately.
-# However, this means invoking executables, which we generally cannot do
-# when cross-compiling, so we test to avoid that (the variable
-# "cross_compiling" is set by AC_PROG_CC).
-dnl (not used right now)
-dnl if test $cross_compiling = no; then
-dnl     AM_MISSING_PROG(HELP2MAN, help2man)
-dnl else
-dnl     HELP2MAN=:
-dnl fi
 
 # Override the template file name of the generated .pc file, so that there
 # is no need to rename the template file when the API version changes.
