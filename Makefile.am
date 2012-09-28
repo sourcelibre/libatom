@@ -10,7 +10,7 @@ SUBDIRS = \
     doc
 
 EXTRA_DIST = \
-    LICENSE \
+    COPYING \
     NEWS \
     README
 

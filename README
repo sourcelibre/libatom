@@ -1,22 +1,29 @@
+Libatom
+=======
 Libatom is a generic container for values.
 
 For more information, contact one of the authors:
 
- * Alexandre Quessy <alexandre@quessy.net>
+* Alexandre Quessy <alexandre@quessy.net>
+
+
+Project URL
+-----------
+http://code.sat.qc.ca/redmine/projects/libatom 
+
 
 Additional Documentation
 ------------------------
-
 http://code.sat.qc.ca/doc/libatom/latest
+
 
 License
 -------
-
 Free software released under the LGPL.
+
 
 Version numbers
 ---------------
-
 Atom uses the common "Linux kernel" versioning system, where even-numbered minor versions are stable and odd-numbered minor versions are development snapshots.
 
 The micro version indicates the origin of the release: even micro numbers are only used for released archives; odd micro numbers are only used on the Git repository.
@@ -28,23 +35,19 @@ In contrast, unstable branches consist of tags which are developer snapshots. Th
 
 Installing
 ----------
+This library is packaged using the GNU Autotools. It should be easy to build and install it like this::
 
-This library uses the GNU Autotools. It should be easy to build and install it like this:
-
- $ ./configure
- $ make
- $ sudo make install
-gg
-NOTE: If building from a git checkout, you should run ./autogen.sh first.
-
-On GNU/Linux, you need to install the following software: 
- * The GNU Autotools
- * liblo-dev
+  sudo apt-get install gettext automake bison build-essential flex libtool 
+  sudo apt-get install liblo0-dev
+  ./autogen.sh
+  ./configure
+  make
+  sudo make install
+  sudo ldconfig
 
 
 Documentation
 -------------
-
 We use Doxygen to build the HTML documentation. To build it, install doxygen and type:
 
  $ make html
