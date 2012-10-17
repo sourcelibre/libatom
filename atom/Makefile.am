@@ -38,7 +38,9 @@ libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
     atom.h \
     booleanvalue.h \
     floatvalue.h \
+    intvalue.h \
     listvalue.h \
+    message.h \
     osc.h \
     nullvalue.h \
     stringvalue.h \
