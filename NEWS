@@ -1,15 +1,26 @@
 Libatom release NEWS
 ====================
 
-2012-??-?? libatom 0.1.4
+2012-??-?? libatom 0.1.6
 ------------------------
 This release is a developer snapshot in the 0.1 unstable series. 
 
 New Features:
+
 * (none yet)
 
 Bug fixes:
+
 * (none yet)
+
+
+2012-10-17 libatom 0.1.4
+------------------------
+This release is a developer snapshot in the 0.1 unstable series. 
+
+New Features:
+
+* add PointerValue and DictValue
 
 
 2012-10-17 libatom 0.1.2
@@ -17,6 +28,7 @@ Bug fixes:
 This release is a developer snapshot in the 0.1 unstable series. 
 
 New Features:
+
 * Add IntValue, StringValue, BooleanValue, FloatValue, NullValue, ListValue
 * Remove Atom
 
@@ -28,5 +40,6 @@ This release is a developer snapshot in the 0.1 unstable series.
 It is the initial release of libatom.
 
 New Features:
+
 * Provide a generic container for simple data types.
 
