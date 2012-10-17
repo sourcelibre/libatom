@@ -53,6 +53,15 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     {
         os << "null";
     }
+    else if (value->getTypeTag() == PointerValue::TYPE_TAG)
+    {
+        os << PointerValue::convert(value)->getPointer().get();
+    }
+    else if (value->getTypeTag() == DictValue::TYPE_TAG)
+    {
+        std::map<std::string, Value::ptr> map = (DictValue::convert(value))->getMap();
+        os << map;
+    }
     else
     {
         std::cerr << __FUNCTION__ << ": Unsupported type \"" << value->getTypeTag() << "\"." << std::endl;
@@ -73,6 +82,29 @@ std::ostream & operator<<(std::ostream &os, const std::vector<Value::ptr>& messa
         }
     }
     os << "]";
+    return os;
+}
+
+std::ostream & operator<<(std::ostream &os, const std::map<std::string, Value::ptr>& map)
+{
+    os << "{";
+    std::map<std::string, Value::ptr>::const_iterator iter;
+    unsigned int position = 0;
+    unsigned int size = map.size();
+    for (iter = map.begin(); iter != map.end(); ++iter)
+    {
+        std::string key = (*iter).first;
+        Value::ptr value = (*iter).second;
+
+        os << "\"" <<  key << "\":";
+        os << value;
+        if (size != 0 && position < size - 1)
+        {
+            os << ", ";
+        }
+        position++;
+    }
+    os << "}";
     return os;
 }
 
