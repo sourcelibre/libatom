@@ -1,6 +1,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include <tr1/memory>
 
 // base class:
@@ -17,7 +18,7 @@ class Value
 };
 
 // static functions:
-static void printValues(const std::vector<Value::ptr> &message);
+static void printValues(std::ostringstream &os, const std::vector<Value::ptr> &message);
 
 // Children of Value:
 class IntValue: public Value
@@ -84,56 +85,68 @@ class StringValue: public Value
         }
 };
 
-// class ListValue: public Value
-// {
-//     public:
-//         ListValue(const std::vector<Value> &value) :
-//             value_(value);
-//         {}
-//         void setList(const std::vector<Value> &value)
-//         {
-//             this->value_ = value;
-//         }
-//         const std::vector<Value> & getList() const
-//         {
-//             return value_;
-//         }
-//         Value::ptr create(std::vector<Value> &value)
-//         {
-//             return Value::ptr(new ListValue(value));
-//         }
-//         IntValue::ptr convert(Value::ptr from)
-//         {
-//             return std::tr1::dynamic_pointer_cast<ListValue>(from);
-//         }
-//     private:
-//         std::vector<Value> value_;
-//         virtual char doGetTypeTag() const
-//         {
-//             return 'l'
-//         }
-// };
-
-static void printValues(const std::vector<Value::ptr> &message)
+class ListValue: public Value
 {
-    std::vector<Value::ptr>::const_iterator iter;
-    for (iter = message.begin(); iter != message.end(); ++iter)
-    {
-        if ((*iter)->getTypeTag() == 'i')
+    public:
+        typedef std::tr1::shared_ptr<ListValue> ptr;
+        ListValue(const std::vector<Value::ptr> &value) :
+            value_(value)
+        {}
+        void setList(const std::vector<Value::ptr> &value)
         {
-            std::cout << (IntValue::convert((*iter)))->getInt() << std::endl;
+            this->value_ = value;
         }
-        else if ((*iter)->getTypeTag() == 's')
+        std::vector<Value::ptr> & getList()
         {
-            StringValue::ptr tmp = std::tr1::dynamic_pointer_cast<StringValue>((*iter));
-            std::cout << tmp->getString() << std::endl;
-            //std::cout << (StringValue::convert((*iter)))->getString() << std::endl;
+            return value_;
+        }
+        static Value::ptr create(std::vector<Value::ptr> value)
+        {
+            return Value::ptr(new ListValue(value));
+        }
+        static ListValue::ptr convert(Value::ptr from)
+        {
+            return std::tr1::dynamic_pointer_cast<ListValue>(from);
+        }
+    private:
+        std::vector<Value::ptr> value_;
+        virtual char doGetTypeTag() const
+        {
+            return 'l';
+        }
+};
+
+static void printValues(std::ostringstream &os, const std::vector<Value::ptr> &message)
+{
+    os << "[";
+    for (unsigned int i = 0; i < message.size(); ++i)
+    {
+        Value::ptr value = message[i];
+        if (value->getTypeTag() == 'i')
+        {
+            os << IntValue::convert(value)->getInt();
+        }
+        else if (value->getTypeTag() == 's')
+        {
+            os << "\"";
+            os << StringValue::convert(value)->getString();
+            os << "\"";
+        }
+        else if (value->getTypeTag() == 'l')
+        {
+            std::vector<Value::ptr> list = (ListValue::convert(value))->getList();
+            printValues(os, list);
         }
         else
         {
-            std::cerr << __FUNCTION__ << ": Unsupported type \"" << (*iter)->getTypeTag() << "\"." << std::endl;
+            std::cerr << __FUNCTION__ << ": Unsupported type \"" << value->getTypeTag() << "\"." << std::endl;
+        }
+        if (message.size() != 0 && i < message.size() - 1)
+        {
+            os << ", ";
         }
     }
+    os << "]";
 }
 
 int main(int /* argc */, char ** /* argv */)
@@ -141,7 +154,15 @@ int main(int /* argc */, char ** /* argv */)
     std::vector<Value::ptr> message;
     message.push_back(IntValue::create(2));
     message.push_back(StringValue::create("hello"));
-    printValues(message);
+
+    std::vector<Value::ptr> list;
+    list.push_back(IntValue::create(2));
+    list.push_back(StringValue::create("hello"));
+    message.push_back(ListValue::create(list));
+    
+    std::ostringstream os;
+    printValues(os, message);
+    std::cout << os.str() << std::endl;
     return 0;
 }
 
