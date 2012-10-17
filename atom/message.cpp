@@ -53,6 +53,10 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     {
         os << "null";
     }
+    else if (value->getTypeTag() == PointerValue::TYPE_TAG)
+    {
+        os << PointerValue::convert(value)->getPointer().get();
+    }
     else if (value->getTypeTag() == DictValue::TYPE_TAG)
     {
         std::map<std::string, Value::ptr> map = (DictValue::convert(value))->getMap();

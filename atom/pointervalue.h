@@ -18,48 +18,55 @@
  */
 
 /** @file
- * The DictValue class.
+ * The PointerValue class.
  */
 
-#ifndef __ATOM_DICTVALUE_H__
-#define __ATOM_DICTVALUE_H__
+#ifndef __ATOM_POINTERVALUE_H__
+#define __ATOM_POINTERVALUE_H__
 
-#include <map>
-#include <string>
 #include "atom/value.h"
 
 namespace atom {
 
 /**
- * Stores a map of strings to shared pointers to Value instances.
+ * Base class for objects to store in a PointerValue.
+ * Extend this class to store data into PointerValue
  */
-class DictValue: public Value
+class AbstractObject
 {
     public:
-        typedef std::tr1::shared_ptr<DictValue> ptr;
-        static const char TYPE_TAG = 'D';
-        DictValue(const std::map<std::string, Value::ptr> &value) :
+        typedef std::tr1::shared_ptr<AbstractObject> ptr;
+};
+
+/**
+ * Stores a shared pointer to a child of the AbstractObject class.
+ */
+class PointerValue: public Value
+{
+    public:
+        typedef std::tr1::shared_ptr<PointerValue> ptr;
+        static const char TYPE_TAG = 'P';
+        PointerValue(AbstractObject::ptr &value) :
             value_(value)
         {}
-        void setMap(const std::map<std::string, Value::ptr> &value)
+        void setPointer(AbstractObject::ptr &value)
         {
             this->value_ = value;
         }
-        std::map<std::string, Value::ptr> & getMap()
+        AbstractObject::ptr & getPointer()
         {
             return value_;
         }
-        static Value::ptr create(std::map<std::string, Value::ptr> &value)
+        static Value::ptr create(AbstractObject::ptr value)
         {
-            DictValue::ptr ret(new DictValue(value));
-            return std::tr1::static_pointer_cast<Value>(ret);
+            return Value::ptr(new PointerValue(value));
         }
-        static DictValue::ptr convert(Value::ptr from)
+        static PointerValue::ptr convert(Value::ptr from)
         {
-            return std::tr1::dynamic_pointer_cast<DictValue>(from);
+            return std::tr1::dynamic_pointer_cast<PointerValue>(from);
         }
     private:
-        std::map<std::string, Value::ptr> value_;
+        AbstractObject::ptr value_;
         virtual char doGetTypeTag() const
         {
             return TYPE_TAG;
