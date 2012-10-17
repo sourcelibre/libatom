@@ -24,13 +24,16 @@ bool check_messages()
     
     if (VERBOSE)
     {
-        std::cout << message;
+        std::cout << __FILE__ << ": " << getTypeTags(message) << std::endl;
+        std::cout << __FILE__ << ": " <<  message << std::endl;
     }
     return true;
 }
 
 int main(int /* argc */, char ** /* argv */)
 {
+    if (! check_messages())
+        return 1;
     return 0;
 }
 
