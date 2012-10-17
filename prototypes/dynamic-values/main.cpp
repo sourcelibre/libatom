@@ -53,6 +53,38 @@ class IntValue: public Value
         }
 };
 
+class FloatValue: public Value
+{
+    public:
+        typedef std::tr1::shared_ptr<FloatValue> ptr;
+        FloatValue(double value) :
+            value_(value)
+        {}
+        void setFloat(double value)
+        {
+            this->value_ = value;
+        }
+        double getFloat() const
+        {
+            return value_;
+        }
+        static Value::ptr create(double value)
+        {
+            FloatValue::ptr ret(new FloatValue(value));
+            return std::tr1::static_pointer_cast<Value>(ret);
+        }
+        static FloatValue::ptr convert(const Value::ptr &from)
+        {
+            return std::tr1::dynamic_pointer_cast<FloatValue>(from);
+        }
+    private:
+        double value_;
+        virtual char doGetTypeTag() const
+        {
+            return 'f';
+        }
+};
+
 class StringValue: public Value
 {
     public:
@@ -137,6 +169,10 @@ static void printValues(std::ostringstream &os, const std::vector<Value::ptr> &m
             std::vector<Value::ptr> list = (ListValue::convert(value))->getList();
             printValues(os, list);
         }
+        else if (value->getTypeTag() == 'f')
+        {
+            os << FloatValue::convert(value)->getFloat();
+        }
         else
         {
             std::cerr << __FUNCTION__ << ": Unsupported type \"" << value->getTypeTag() << "\"." << std::endl;
@@ -153,11 +189,13 @@ int main(int /* argc */, char ** /* argv */)
 {
     std::vector<Value::ptr> message;
     message.push_back(IntValue::create(2));
+    message.push_back(FloatValue::create(3.14159));
     message.push_back(StringValue::create("hello"));
 
     std::vector<Value::ptr> list;
-    list.push_back(IntValue::create(2));
-    list.push_back(StringValue::create("hello"));
+    list.push_back(IntValue::create(3));
+    list.push_back(FloatValue::create(1.618));
+    list.push_back(StringValue::create("hi"));
     message.push_back(ListValue::create(list));
     
     std::ostringstream os;
