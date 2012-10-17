@@ -36,6 +36,7 @@ class StringValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<StringValue> ptr;
+        static const char TYPE_TAG = 's';
         void setString(const char * value)
         {
             this->value_ = value;
@@ -60,7 +61,7 @@ class StringValue: public Value
         {}
         virtual char doGetTypeTag() const
         {
-            return 's';
+            return TYPE_TAG;
         }
 };
 

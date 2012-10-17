@@ -32,6 +32,7 @@ class NullValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<NullValue> ptr;
+        static const char TYPE_TAG = 'N';
         static Value::ptr create()
         {
             NullValue::ptr ret(new NullValue());
@@ -47,7 +48,7 @@ class NullValue: public Value
         {}
         virtual char doGetTypeTag() const
         {
-            return '-';
+            return TYPE_TAG;
         }
 };
 

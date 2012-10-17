@@ -35,6 +35,7 @@ class BooleanValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<BooleanValue> ptr;
+        static const char TYPE_TAG = 'b';
         void setBoolean(bool value)
         {
             this->value_ = value;
@@ -59,7 +60,7 @@ class BooleanValue: public Value
         {}
         virtual char doGetTypeTag() const
         {
-            return 'b';
+            return TYPE_TAG;
         }
 };
 

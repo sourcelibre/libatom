@@ -36,6 +36,7 @@ class ListValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<ListValue> ptr;
+        static const char TYPE_TAG = 'L';
         ListValue(const std::vector<Value::ptr> &value) :
             value_(value)
         {}
@@ -59,7 +60,7 @@ class ListValue: public Value
         std::vector<Value::ptr> value_;
         virtual char doGetTypeTag() const
         {
-            return 'l';
+            return TYPE_TAG;
         }
 };
 

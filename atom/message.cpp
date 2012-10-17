@@ -26,30 +26,30 @@ namespace atom {
 
 std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
 {
-    if (value->getTypeTag() == 'i')
+    if (value->getTypeTag() == IntValue::TYPE_TAG)
     {
         os << IntValue::convert(value)->getInt();
     }
-    else if (value->getTypeTag() == 's')
+    else if (value->getTypeTag() == StringValue::TYPE_TAG)
     {
         os << "\"";
         os << StringValue::convert(value)->getString();
         os << "\"";
     }
-    else if (value->getTypeTag() == 'l')
+    else if (value->getTypeTag() == ListValue::TYPE_TAG)
     {
         std::vector<Value::ptr> list = (ListValue::convert(value))->getList();
         os << list;
     }
-    else if (value->getTypeTag() == 'f')
+    else if (value->getTypeTag() == FloatValue::TYPE_TAG)
     {
         os << FloatValue::convert(value)->getFloat();
     }
-    else if (value->getTypeTag() == 'b')
+    else if (value->getTypeTag() == BooleanValue::TYPE_TAG)
     {
         os << (BooleanValue::convert(value)->getBoolean() ? "true" : "false");
     }
-    else if (value->getTypeTag() == '-')
+    else if (value->getTypeTag() == NullValue::TYPE_TAG)
     {
         os << "null";
     }

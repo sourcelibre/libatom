@@ -32,6 +32,7 @@ class FloatValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<FloatValue> ptr;
+        static const char TYPE_TAG = 'f';
         void setFloat(double value)
         {
             this->value_ = value;
@@ -56,7 +57,7 @@ class FloatValue: public Value
         {}
         virtual char doGetTypeTag() const
         {
-            return 'f';
+            return TYPE_TAG;
         }
 };
 
