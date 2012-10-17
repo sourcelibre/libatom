@@ -16,8 +16,6 @@ class Value
         virtual char doGetTypeTag() const = 0;
 };
 
-typedef std::vector<Value::ptr> Message;
-
 // static functions:
 static void printValues(const std::vector<Value::ptr> &message);
 
@@ -42,7 +40,7 @@ class IntValue: public Value
             IntValue::ptr ret(new IntValue(value));
             return std::tr1::static_pointer_cast<Value>(ret);
         }
-        static IntValue::ptr convert(Value::ptr &from)
+        static IntValue::ptr convert(const Value::ptr &from)
         {
             return std::tr1::dynamic_pointer_cast<IntValue>(from);
         }
@@ -65,16 +63,16 @@ class StringValue: public Value
         {
             this->value_ = value;
         }
-        const char * getString() const
+        const std::string & getString() const
         {
-            return value_.c_str();
+            return value_;
         }
         static Value::ptr create(const char * value)
         {
             StringValue::ptr ret(new StringValue(value));
             return std::tr1::static_pointer_cast<Value>(ret);
         }
-        static StringValue::ptr convert(Value::ptr &from)
+        static StringValue::ptr convert(const Value::ptr &from)
         {
             return std::tr1::dynamic_pointer_cast<StringValue>(from);
         }
@@ -116,10 +114,9 @@ class StringValue: public Value
 //         }
 // };
 
-
-static void printValues(std::vector<Value::ptr> &message)
+static void printValues(const std::vector<Value::ptr> &message)
 {
-    std::vector<Value::ptr>::iterator iter;
+    std::vector<Value::ptr>::const_iterator iter;
     for (iter = message.begin(); iter != message.end(); ++iter)
     {
         if ((*iter)->getTypeTag() == 'i')
