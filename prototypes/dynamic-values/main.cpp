@@ -25,9 +25,6 @@ class IntValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
-        IntValue(long int value) :
-            value_(value)
-        {}
         void setInt(long int value)
         {
             this->value_ = value;
@@ -47,6 +44,9 @@ class IntValue: public Value
         }
     private:
         long int value_;
+        IntValue(long int value) :
+            value_(value)
+        {}
         virtual char doGetTypeTag() const
         {
             return 'i';
@@ -57,9 +57,6 @@ class FloatValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<FloatValue> ptr;
-        FloatValue(double value) :
-            value_(value)
-        {}
         void setFloat(double value)
         {
             this->value_ = value;
@@ -79,9 +76,44 @@ class FloatValue: public Value
         }
     private:
         double value_;
+        FloatValue(double value) :
+            value_(value)
+        {}
         virtual char doGetTypeTag() const
         {
             return 'f';
+        }
+};
+
+class BooleanValue: public Value
+{
+    public:
+        typedef std::tr1::shared_ptr<BooleanValue> ptr;
+        void setBoolean(bool value)
+        {
+            this->value_ = value;
+        }
+        bool getBoolean() const
+        {
+            return value_;
+        }
+        static Value::ptr create(bool value)
+        {
+            BooleanValue::ptr ret(new BooleanValue(value));
+            return std::tr1::static_pointer_cast<Value>(ret);
+        }
+        static BooleanValue::ptr convert(const Value::ptr &from)
+        {
+            return std::tr1::dynamic_pointer_cast<BooleanValue>(from);
+        }
+    private:
+        bool value_;
+        BooleanValue(bool value) :
+            value_(value)
+        {}
+        virtual char doGetTypeTag() const
+        {
+            return 'b';
         }
 };
 
@@ -89,9 +121,6 @@ class StringValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<StringValue> ptr;
-        StringValue(const char *value) :
-            value_(value)
-        {}
         void setString(const char * value)
         {
             this->value_ = value;
@@ -111,9 +140,35 @@ class StringValue: public Value
         }
     private:
         std::string value_;
+        StringValue(const char *value) :
+            value_(value)
+        {}
         virtual char doGetTypeTag() const
         {
             return 's';
+        }
+};
+
+class NullValue: public Value
+{
+    public:
+        typedef std::tr1::shared_ptr<NullValue> ptr;
+        static Value::ptr create()
+        {
+            NullValue::ptr ret(new NullValue());
+            return std::tr1::static_pointer_cast<Value>(ret);
+        }
+        static NullValue::ptr convert(const Value::ptr &from)
+        {
+            return std::tr1::dynamic_pointer_cast<NullValue>(from);
+        }
+    private:
+        std::string value_;
+        NullValue()
+        {}
+        virtual char doGetTypeTag() const
+        {
+            return '-';
         }
 };
 
@@ -173,6 +228,14 @@ static void printValues(std::ostringstream &os, const std::vector<Value::ptr> &m
         {
             os << FloatValue::convert(value)->getFloat();
         }
+        else if (value->getTypeTag() == 'b')
+        {
+            os << (BooleanValue::convert(value)->getBoolean() ? "true" : "false");
+        }
+        else if (value->getTypeTag() == '-')
+        {
+            os << "null";
+        }
         else
         {
             std::cerr << __FUNCTION__ << ": Unsupported type \"" << value->getTypeTag() << "\"." << std::endl;
@@ -191,11 +254,15 @@ int main(int /* argc */, char ** /* argv */)
     message.push_back(IntValue::create(2));
     message.push_back(FloatValue::create(3.14159));
     message.push_back(StringValue::create("hello"));
+    message.push_back(BooleanValue::create(true));
+    message.push_back(NullValue::create());
 
     std::vector<Value::ptr> list;
     list.push_back(IntValue::create(3));
     list.push_back(FloatValue::create(1.618));
     list.push_back(StringValue::create("hi"));
+    list.push_back(BooleanValue::create(false));
+    list.push_back(NullValue::create());
     message.push_back(ListValue::create(list));
     
     std::ostringstream os;
