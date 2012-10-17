@@ -57,6 +57,7 @@ class IntValue: public Value
 class StringValue: public Value
 {
     public:
+        typedef std::tr1::shared_ptr<StringValue> ptr;
         StringValue(const char *value) :
             value_(value)
         {}
@@ -125,10 +126,12 @@ static void printValues(std::vector<Value::ptr> &message)
         {
             std::cout << (IntValue::convert((*iter)))->getInt() << std::endl;
         }
-        //else if ((*iter)->getTypeTag() == 's')
-       // {
-        //    std::cout << (StringValue::convert((*iter)))->getString() << std::endl;
-       // }
+        else if ((*iter)->getTypeTag() == 's')
+        {
+            StringValue::ptr tmp = std::tr1::dynamic_pointer_cast<StringValue>((*iter));
+            std::cout << tmp->getString() << std::endl;
+            //std::cout << (StringValue::convert((*iter)))->getString() << std::endl;
+        }
         else
         {
             std::cerr << __FUNCTION__ << ": Unsupported type \"" << (*iter)->getTypeTag() << "\"." << std::endl;
