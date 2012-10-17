@@ -6,6 +6,7 @@ AUTOMAKE_OPTIONS = foreign
 
 SUBDIRS = \
     atom \
+    entity \
     build \
     doc
 

@@ -20,9 +20,11 @@ AC_CANONICAL_HOST # fills $host variable
 #  * revision: Increment when the implementation changes, but not the interface.
 #  * age: Backward-compatible with how many interface numbers.
 AC_SUBST([ATOM_SO_VERSION], [0:0:0])
+AC_SUBST([ENTITY_SO_VERSION], [0:0:0])
 
 # The version of the API. Should be major.minor and not change until not backward-compatible
 AC_SUBST([ATOM_API_VERSION], [0.1])
+AC_SUBST([ENTITY_API_VERSION], [0.1])
 
 # Checks for programs.
 AC_PROG_CXX
@@ -73,9 +75,13 @@ AC_CONFIG_FILES([
         atom/version.h
         atom/Makefile 
         atom/tests/Makefile
+        entity/version.h
+        entity/Makefile 
+        entity/tests/Makefile
         build/Makefile
         doxyfile 
         atom-${ATOM_API_VERSION}.pc:atom.pc.in
+        entity-${ENTITY_API_VERSION}.pc:entity.pc.in
         doc/Makefile
         ])
 
