@@ -26,6 +26,8 @@
 
 #include "atom/value.h"
 
+namespace atom {
+
 class FloatValue: public Value
 {
     public:

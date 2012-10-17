@@ -26,6 +26,8 @@
 
 #include "atom/value.h"
 
+namespace atom {
+
 /**
  * Stores an integer.
  */
@@ -33,6 +35,7 @@ class IntValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
+        static const char TYPE_TAG = 'i';
         void setInt(long int value)
         {
             this->value_ = value;
@@ -57,7 +60,7 @@ class IntValue: public Value
         {}
         virtual char doGetTypeTag() const
         {
-            return 'i';
+            return TYPE_TAG;
         }
 };
 

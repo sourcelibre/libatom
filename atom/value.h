@@ -39,6 +39,7 @@ class Value
         {
             return this->doGetTypeTag();
         }
+        virtual ~Value() {}
     private:
         virtual char doGetTypeTag() const = 0;
 };

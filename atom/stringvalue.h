@@ -27,6 +27,8 @@
 #include <string>
 #include "atom/value.h"
 
+namespace atom {
+
 /**
  * Stores a text string.
  */
