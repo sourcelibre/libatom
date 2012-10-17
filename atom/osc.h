@@ -18,11 +18,20 @@
  */
 
 /** @file
- * Provides version info for libatom.
+ * Liblo utilities
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
 
-const char * const ATOM_VERSION = "@PACKAGE_VERSION@";
+#ifndef __ATOM_OSC_H__
+#define __ATOM_OSC_H__
 
-#endif // __VERSION_H__
+#include "atom/message.h"
+#include <lo/lo.h>
+
+namespace atom {
+
+bool message_build_from_lo_args(Message &result, const char * types, lo_arg ** argv, int argc);
+
+} // end namespace
+
+#endif // include guard
+
