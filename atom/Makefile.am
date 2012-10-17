@@ -34,5 +34,11 @@ libatom_@ATOM_API_VERSION@_la_SOURCES = \
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
     atom.h \
-	version.h
+    booleanvalue.h \
+    floatvalue.h \
+    listvalue.h \
+    nullvalue.h \
+    stringvalue.h \
+    version.h \
+    value.h
 

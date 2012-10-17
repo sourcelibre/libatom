@@ -18,11 +18,38 @@
  */
 
 /** @file
- * Provides version info for libatom.
+ * The NullValue class.
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
 
-const char * const ATOM_VERSION = "@PACKAGE_VERSION@";
+#ifndef __ATOM_NULLVALUE_H__
+#define __ATOM_NULLVALUE_H__
 
-#endif // __VERSION_H__
+#include "atom/value.h"
+
+class NullValue: public Value
+{
+    public:
+        typedef std::tr1::shared_ptr<NullValue> ptr;
+        static Value::ptr create()
+        {
+            NullValue::ptr ret(new NullValue());
+            return std::tr1::static_pointer_cast<Value>(ret);
+        }
+        static NullValue::ptr convert(const Value::ptr &from)
+        {
+            return std::tr1::dynamic_pointer_cast<NullValue>(from);
+        }
+    private:
+        std::string value_;
+        NullValue()
+        {}
+        virtual char doGetTypeTag() const
+        {
+            return '-';
+        }
+};
+
+} // end of namespace
+
+#endif // include guard
+
