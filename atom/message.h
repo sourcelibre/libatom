@@ -18,11 +18,32 @@
  */
 
 /** @file
- * Provides version info for libatom.
+ * The Message typedef
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
 
-const char * const ATOM_VERSION = "@PACKAGE_VERSION@";
+#ifndef __ATOM_MESSAGE_H__
+#define __ATOM_MESSAGE_H__
 
-#endif // __VERSION_H__
+#include "atom/value.h"
+#include "atom/intvalue.h"
+#include "atom/floatvalue.h"
+#include "atom/stringvalue.h"
+#include "atom/listvalue.h"
+#include "atom/booleanvalue.h"
+#include "atom/nullvalue.h"
+#include <vector>
+#include <ostream>
+
+namespace atom {
+
+typedef std::vector<Value::ptr> Message;
+
+std::ostream & operator<<(std::ostream &os, const Message& message);
+std::ostream & operator<<(std::ostream &os, const Value& value);
+
+std::string getTypeTags(const Message &message);
+
+} // end of namespace
+
+#endif // include guard
+

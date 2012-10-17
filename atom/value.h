@@ -18,11 +18,33 @@
  */
 
 /** @file
- * Provides version info for libatom.
+ * The Value class.
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
 
-const char * const ATOM_VERSION = "@PACKAGE_VERSION@";
+#ifndef __ATOM_VALUE_H__
+#define __ATOM_VALUE_H__
 
-#endif // __VERSION_H__
+#include <tr1/memory>
+
+namespace atom {
+
+/**
+ * Generic container for data.
+ */
+class Value
+{
+    public:
+        typedef std::tr1::shared_ptr<Value> ptr;
+        char getTypeTag() const
+        {
+            return this->doGetTypeTag();
+        }
+        virtual ~Value() {}
+    private:
+        virtual char doGetTypeTag() const = 0;
+};
+
+} // end of namespace
+
+#endif // include guard
+
