@@ -30,7 +30,8 @@ libatom_@ATOM_API_VERSION@_la_includedir = $(includedir)/atom-$(ATOM_API_VERSION
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_SOURCES = \
     atom.cpp \
-    message.cpp
+    message.cpp \
+    osc.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
@@ -38,6 +39,7 @@ libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
     booleanvalue.h \
     floatvalue.h \
     listvalue.h \
+    osc.h \
     nullvalue.h \
     stringvalue.h \
     version.h \
