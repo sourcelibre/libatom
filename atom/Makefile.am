@@ -29,13 +29,11 @@ libatom_@ATOM_API_VERSION@_la_includedir = $(includedir)/atom-$(ATOM_API_VERSION
 ## and the variable name derived from that.
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_SOURCES = \
-    atom.cpp \
     message.cpp \
     osc.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
-    atom.h \
     booleanvalue.h \
     floatvalue.h \
     intvalue.h \
