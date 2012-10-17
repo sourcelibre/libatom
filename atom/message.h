@@ -32,6 +32,7 @@
 #include "atom/booleanvalue.h"
 #include "atom/nullvalue.h"
 #include "atom/dictvalue.h"
+#include "atom/pointervalue.h"
 #include <vector>
 #include <map>
 #include <string>
