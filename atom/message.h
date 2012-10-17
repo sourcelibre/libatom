@@ -31,7 +31,10 @@
 #include "atom/listvalue.h"
 #include "atom/booleanvalue.h"
 #include "atom/nullvalue.h"
+#include "atom/dictvalue.h"
 #include <vector>
+#include <map>
+#include <string>
 #include <ostream>
 
 namespace atom {
@@ -40,6 +43,7 @@ typedef std::vector<Value::ptr> Message;
 
 std::ostream & operator<<(std::ostream &os, const Message& message);
 std::ostream & operator<<(std::ostream &os, const Value& value);
+std::ostream & operator<<(std::ostream &os, const std::map<std::string, Value::ptr>& map);
 
 std::string getTypeTags(const Message &message);
 

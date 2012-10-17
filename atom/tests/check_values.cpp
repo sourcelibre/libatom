@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 #include "atom/message.h"
 
 using namespace atom;
@@ -21,11 +22,22 @@ bool check_messages()
     list.push_back(BooleanValue::create(false));
     list.push_back(NullValue::create());
     message.push_back(ListValue::create(list));
+
+    std::map<std::string, Value::ptr> map;
+    map["foo"] = IntValue::create(3);
+    map["bar"] = FloatValue::create(1.618);
+    map["egg"] = StringValue::create("hi");
+    map["spam"] = BooleanValue::create(false);
+    map["ham"] = NullValue::create();
+    message.push_back(DictValue::create(map));
     
+    std::ostringstream os;
+    os << __FILE__ << ": " << getTypeTags(message) << std::endl;
+    os << __FILE__ << ": " <<  message << std::endl;
+
     if (VERBOSE)
     {
-        std::cout << __FILE__ << ": " << getTypeTags(message) << std::endl;
-        std::cout << __FILE__ << ": " <<  message << std::endl;
+        std::cout << os.str();
     }
     return true;
 }
