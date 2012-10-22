@@ -7,7 +7,8 @@ This release is a developer snapshot in the 0.1 unstable series.
 
 New Features:
 
-* (none yet)
+* IntValue and FloatValue now have the setMin, getMin, setMax and getMax methods.
+* Check that float/int is within range when setting it.
 
 Bug fixes:
 
