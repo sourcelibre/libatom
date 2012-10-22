@@ -12,7 +12,7 @@ New Features:
 
 Bug fixes:
 
-* (none yet)
+* Put VERSION constant in the atom namespace
 
 
 2012-10-17 libatom 0.1.4
