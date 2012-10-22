@@ -3,7 +3,6 @@
 #include "atom/message.h"
 
 using namespace atom;
-
 static const bool VERBOSE = true;
 
 class Dummy : public AbstractObject
@@ -69,6 +68,12 @@ bool check_range()
     IntValue::ptr i = IntValue::convert(message[0]);
     FloatValue::ptr f = FloatValue::convert(message[1]);
 
+    if (VERBOSE)
+    {
+        std::cout << "Float range: [" << f->getMin() << ", " << f->getMax() << "]" << std::endl;
+        std::cout << "Int   range: [" << i->getMin() << ", " << i->getMax() << "]" << std::endl;
+    }
+
     i->setRange(1, 100);
     if (i->setInt(200))
     {
@@ -95,6 +100,8 @@ bool check_range()
 int main(int /* argc */, char ** /* argv */)
 {
     if (! check_messages())
+        return 1;
+    if (! check_range())
         return 1;
     return 0;
 }
