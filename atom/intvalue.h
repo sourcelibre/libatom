@@ -25,6 +25,7 @@
 #define __ATOM_INTVALUE_H__
 
 #include "atom/value.h"
+#include <limits>
 
 namespace atom {
 
@@ -36,9 +37,14 @@ class IntValue: public Value
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
         static const char TYPE_TAG = 'i';
-        void setInt(long int value)
+        bool setInt(long int value)
         {
+            if (value > this->max_)
+                return false;
+            if (value < this->min_)
+                return false;
             this->value_ = value;
+            return true;
         }
         long int getInt() const
         {
@@ -53,11 +59,46 @@ class IntValue: public Value
         {
             return std::tr1::dynamic_pointer_cast<IntValue>(from);
         }
+        bool setRange(long int minimum, long int maximum)
+        {
+            if (! this->setMin(minimum))
+                return false;
+            if (! this->setMax(maximum))
+                return false;
+            return true;
+        }
+        bool setMax(long int maximum)
+        {
+            if (maximum > std::numeric_limits<long int>::max())
+                return false;
+            this->max_ = maximum;
+            return true;
+        }
+        bool setMin(long int minimum)
+        {
+            if (minimum < std::numeric_limits<long int>::min())
+                return false;
+            this->min_ = minimum;
+            return true;
+        }
+        long int getMax() const
+        {
+            return this->max_;
+        }
+        long int getMin() const
+        {
+            return this->min_;
+        }
     private:
         long int value_;
+        long int max_;
+        long int min_;
         IntValue(long int value) :
             value_(value)
-        {}
+        {
+            this->min_ = std::numeric_limits<long int>::min();
+            this->max_ = std::numeric_limits<long int>::max();
+        }
         virtual char doGetTypeTag() const
         {
             return TYPE_TAG;

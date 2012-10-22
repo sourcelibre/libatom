@@ -33,9 +33,14 @@ class FloatValue: public Value
     public:
         typedef std::tr1::shared_ptr<FloatValue> ptr;
         static const char TYPE_TAG = 'f';
-        void setFloat(double value)
+        bool setFloat(double value)
         {
+            if (value > this->max_)
+                return false;
+            if (value < this->min_)
+                return false;
             this->value_ = value;
+            return true;
         }
         double getFloat() const
         {
@@ -50,11 +55,46 @@ class FloatValue: public Value
         {
             return std::tr1::dynamic_pointer_cast<FloatValue>(from);
         }
+        bool setRange(double minimum, double maximum)
+        {
+            if (! this->setMin(minimum))
+                return false;
+            if (! this->setMax(maximum))
+                return false;
+            return true;
+        }
+        bool setMax(double maximum)
+        {
+            if (maximum > std::numeric_limits<double>::max())
+                return false;
+            this->max_ = maximum;
+            return true;
+        }
+        bool setMin(double minimum)
+        {
+            if (minimum < std::numeric_limits<double>::min())
+                return false;
+            this->min_ = minimum;
+            return true;
+        }
+        double getMax() const
+        {
+            return this->max_;
+        }
+        double getMin() const
+        {
+            return this->min_;
+        }
     private:
         double value_;
+        double max_;
+        double min_;
         FloatValue(double value) :
             value_(value)
-        {}
+        {
+            this->min_ = std::numeric_limits<double>::min();
+            this->max_ = std::numeric_limits<double>::max();
+        }
         virtual char doGetTypeTag() const
         {
             return TYPE_TAG;
