@@ -30,6 +30,7 @@
 namespace atom {
 
 bool message_build_from_lo_args(Message &result, const char * types, lo_arg ** argv, int argc);
+bool message_build_to_lo_message(Message &source, lo_message &message);
 
 } // end namespace
 
