@@ -29,6 +29,7 @@ libatom_@ATOM_API_VERSION@_la_includedir = $(includedir)/atom-$(ATOM_API_VERSION
 ## and the variable name derived from that.
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_SOURCES = \
+	intvalue.cpp \
     message.cpp \
     osc.cpp
 
@@ -42,7 +43,6 @@ libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
     listvalue.h \
     message.h \
     nullvalue.h \
-    osc.h \
     pointervalue.h \
     stringvalue.h \
     version.h \

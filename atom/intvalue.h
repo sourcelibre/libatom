@@ -39,86 +39,25 @@ class IntValue: public Value
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
         static const char TYPE_TAG = 'i';
-        bool setInt(long int value)
-        {
-            if (value > this->max_)
-                return false;
-            if (value < this->min_)
-                return false;
-            this->value_ = value;
-            return true;
-        }
-        long int getInt() const
-        {
-            return value_;
-        }
-        static Value::ptr create(long int value)
-        {
-            IntValue::ptr ret(new IntValue(value));
-            return std::tr1::static_pointer_cast<Value>(ret);
-        }
-        static IntValue::ptr convert(const Value::ptr &from)
-        {
-            return std::tr1::dynamic_pointer_cast<IntValue>(from);
-        }
-        bool setRange(long int minimum, long int maximum)
-        {
-            if (! this->setMin(minimum))
-                return false;
-            if (! this->setMax(maximum))
-                return false;
-            return true;
-        }
-        bool setMax(long int maximum)
-        {
-            if (maximum > std::numeric_limits<long int>::max())
-                return false;
-            this->max_ = maximum;
-            return true;
-        }
-        bool setMin(long int minimum)
-        {
-            if (minimum < std::numeric_limits<long int>::min())
-                return false;
-            this->min_ = minimum;
-            return true;
-        }
-        long int getMax() const
-        {
-            return this->max_;
-        }
-        long int getMin() const
-        {
-            return this->min_;
-        }
+        bool setInt(long int value);
+        long int getInt() const;
+        static Value::ptr create(long int value);
+        static IntValue::ptr convert(const Value::ptr &from);
+        bool setRange(long int minimum, long int maximum);
+        bool setMax(long int maximum);
+        bool setMin(long int minimum);
+        long int getMax() const;
+        long int getMin() const;
     private:
         long int value_;
         long int max_;
         long int min_;
-        IntValue(long int value) :
-            value_(value)
-        {
-            this->min_ = std::numeric_limits<long int>::min();
-            this->max_ = std::numeric_limits<long int>::max();
-        }
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        IntValue(long int value);
+        virtual char doGetTypeTag() const;
 };
 
 long int toInt(const Value::ptr &value)
-    throw(BadTypeTagError)
-{
-    if (value->getTypeTag() != IntValue::TYPE_TAG)
-    {
-        std::ostringstream os;
-        os << __FUNCTION__ << ": Expect int but got " << value->getTypeTag();
-        throw BadTypeTagError(os.str().c_str());
-    }
-    return IntValue::convert(value)->getInt();
-}
-
+    throw(BadTypeTagError);
 
 } // end of namespace
 
