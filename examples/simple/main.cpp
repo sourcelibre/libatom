@@ -7,7 +7,7 @@
 
 static const bool VERBOSE = true;
 
-int main(int /* argc */, char ** /*argv*/)
+static void example_1()
 {
     atom::Message message;
     message.push_back(atom::StringValue::create("hello"));
@@ -43,6 +43,18 @@ int main(int /* argc */, char ** /*argv*/)
         std::cout << "types: " << atom::getTypeTags(message) << std::endl;
         std::cout << message << std::endl;
     }
+}
+
+static void example_2()
+{
+    atom::Message message = atom::createMessage("sifb", "Hello", 2, 3.14159, true);
+    std::cout << message << std::endl;
+}
+
+int main(int /* argc */, char ** /*argv*/)
+{
+    example_1();
+    example_2();
     return 0;
 }
 

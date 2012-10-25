@@ -48,6 +48,9 @@ std::ostream & operator<<(std::ostream &os, const std::map<std::string, Value::p
 
 std::string getTypeTags(const Message &message);
 
+Message createMessage(const char *types, ...)
+    throw(BadTypeTagError);
+
 } // end of namespace
 
 #endif // include guard
