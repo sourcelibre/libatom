@@ -18,21 +18,42 @@
  */
 
 /** @file
- * Liblo utilities
+ * The BadTypeTagError class.
  */
 
-#ifndef __ATOM_OSC_H__
-#define __ATOM_OSC_H__
+#ifndef __ATOM_EXCEPTIONS_H__
+#define __ATOM_EXCEPTIONS_H__
 
-#include "atom/message.h"
-#include <lo/lo.h>
+#include <stdexcept>
 
 namespace atom {
 
-bool message_build_from_lo_args(Message &result, const char * types, lo_arg ** argv, int argc);
-bool message_build_to_lo_message(Message &source, lo_message &message);
+/**
+ * Base class for errors.
+ */
+class BaseException : public std::runtime_error
+{
+    public:
+        BaseException(const char *error_message) :
+            std::runtime_error(error_message)
+        {}
+        BaseException() :
+            std::runtime_error("")
+        {}
+};
 
-} // end namespace
+/**
+ * Error when type tag is not what is expected.
+ */
+class BadTypeTagError : public BaseException
+{
+    public:
+        BadTypeTagError(const char *error_message) :
+            BaseException(error_message)
+        {}
+};
+
+} // end of namespace
 
 #endif // include guard
 

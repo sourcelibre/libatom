@@ -54,5 +54,33 @@ bool message_build_from_lo_args(Message &result, const char * types, lo_arg ** a
     return ok;
 }
 
+bool message_build_to_lo_message(Message &source, lo_message &message)
+{
+    bool ok = true;
+
+    Message::const_iterator iter;
+    for(iter = source.begin(); iter != source.end(); ++iter)
+    {
+        if (iter->get()->getTypeTag() == IntValue::TYPE_TAG)
+            lo_message_add_int32(message, IntValue::convert(*iter)->getInt());
+        else if (iter->get()->getTypeTag() == StringValue::TYPE_TAG)
+            lo_message_add_string(message, StringValue::convert(*iter)->getString().c_str());
+        else if (iter->get()->getTypeTag() == FloatValue::TYPE_TAG)
+            lo_message_add_float(message, FloatValue::convert(*iter)->getFloat());
+        else if (iter->get()->getTypeTag() == BooleanValue::TYPE_TAG)
+        {
+            bool value = BooleanValue::convert(*iter)->getBoolean();
+            if (value)
+                lo_message_add_true(message);
+            else
+                lo_message_add_false(message);
+        }
+        else
+            ok = false;
+    }
+
+    return ok;
+}
+
 } // end of namespace
 
