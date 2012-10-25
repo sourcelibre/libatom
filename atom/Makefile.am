@@ -36,6 +36,7 @@ libatom_@ATOM_API_VERSION@_la_SOURCES = \
 libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
     booleanvalue.h \
     dictvalue.h \
+    exceptions.h \
     floatvalue.h \
     intvalue.h \
     listvalue.h \

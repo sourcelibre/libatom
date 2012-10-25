@@ -25,7 +25,9 @@
 #define __ATOM_INTVALUE_H__
 
 #include "atom/value.h"
+#include "atom/exceptions.h"
 #include <limits>
+#include <sstream>
 
 namespace atom {
 
@@ -104,6 +106,19 @@ class IntValue: public Value
             return TYPE_TAG;
         }
 };
+
+long int toInt(const Value::ptr &value)
+    throw(BadTypeTagError)
+{
+    if (value->getTypeTag() != IntValue::TYPE_TAG)
+    {
+        std::ostringstream os;
+        os << __FUNCTION__ << ": Expect int but got " << value->getTypeTag();
+        throw BadTypeTagError(os.str().c_str());
+    }
+    return IntValue::convert(value)->getInt();
+}
+
 
 } // end of namespace
 
