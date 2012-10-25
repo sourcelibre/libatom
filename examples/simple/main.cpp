@@ -3,41 +3,44 @@
  * Author: Alexandre Quessy
  */
 #include <iostream>
-#include <atom/atom.h>
+#include <atom/message.h>
 
 static const bool VERBOSE = true;
 
 int main(int /* argc */, char ** /*argv*/)
 {
-    using namespace atom;
-
-    Message message;
-    message.push_back(Atom("hello"));
-    message.push_back(Atom(2));
-    message.push_back(Atom(3.14159));
-    message.push_back(Atom(3.14159f));
-    message.push_back(Atom(true));
+    atom::Message message;
+    message.push_back(atom::StringValue::create("hello"));
+    message.push_back(atom::IntValue::create(2));
+    message.push_back(atom::FloatValue::create(3.14159));
+    message.push_back(atom::BooleanValue::create(true));
 
     if (VERBOSE)
     {
-        Message::const_iterator iter;
+        atom::Message::const_iterator iter;
         for (iter = message.begin(); iter != message.end(); iter++)
         {
-            Atom atom = (*iter);
-            std::cout << atom.getType() << ": ";
-            if (atom.isString())
-                std::cout << atom.getString();
-            else if (atom.isInt())
-                std::cout << atom.getInt();
-            else if (atom.isDouble())
-                std::cout << atom.getDouble();
-            else if (atom.isFloat())
-                std::cout << atom.getFloat();
-            else if (atom.isBool())
-                std::cout << atom.getBool();
+            char typeTag = (*iter)->getTypeTag();
+            switch (typeTag)
+            {
+                case atom::StringValue::TYPE_TAG:
+                    std::cout << atom::StringValue::convert(*iter)->getString();
+                    break;
+                case atom::IntValue::TYPE_TAG:
+                    std::cout << atom::IntValue::convert(*iter)->getInt();
+                    break;
+                case atom::FloatValue::TYPE_TAG:
+                    std::cout << atom::FloatValue::convert(*iter)->getFloat();
+                    break;
+                case atom::BooleanValue::TYPE_TAG:
+                    std::cout << atom::BooleanValue::convert(*iter)->getBoolean();
+                    break;
+                default:
+                    break;
+            }
             std::cout << std::endl;
         }
-        std::cout << "types: " << message_get_types(message) << std::endl;
+        std::cout << "types: " << atom::getTypeTags(message) << std::endl;
         std::cout << message << std::endl;
     }
     return 0;
