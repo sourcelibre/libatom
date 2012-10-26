@@ -17,7 +17,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "atom/intvalue.h"
+#include "atom/stringvalue.h"
 #include <limits>
 #include <sstream>
 #include <ostream>
@@ -25,7 +25,7 @@
 
 namespace atom {
 
-void StringValue::setString(const char * value);
+void StringValue::setString(const char * value)
 {
     this->value_ = value;
 }
@@ -35,18 +35,18 @@ const std::string & StringValue::getString() const
     return value_;
 }
 
-static Value::ptr StringValue::create(const char * value)
+Value::ptr StringValue::create(const char * value)
 {
     StringValue::ptr ret(new StringValue(value));
     return std::tr1::static_pointer_cast<Value>(ret);
 }
 
-static StringValue::ptr StringValue::convert(const Value::ptr &from)
+StringValue::ptr StringValue::convert(const Value::ptr &from)
 {
     return std::tr1::dynamic_pointer_cast<StringValue>(from);
 }
 
-StringValue(const char *value) :
+StringValue::StringValue(const char *value) :
     value_(value)
 {
 }
@@ -59,9 +59,9 @@ char StringValue::doGetTypeTag() const
 std::string toString(const Value::ptr &value)
     throw(BadTypeTagError)
 {
-    if (value->getTypeTag() != IntValue::TYPE_TAG)
+    if (value->getTypeTag() != StringValue::TYPE_TAG)
     {
-        std::osstringstream os;
+        std::ostringstream os;
         os << __FUNCTION__ << ": Expect string but got " << value->getTypeTag();
         throw BadTypeTagError(os.str().c_str());
     }

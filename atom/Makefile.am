@@ -31,7 +31,8 @@ libatom_@ATOM_API_VERSION@_la_includedir = $(includedir)/atom-$(ATOM_API_VERSION
 libatom_@ATOM_API_VERSION@_la_SOURCES = \
 	intvalue.cpp \
     message.cpp \
-    osc.cpp
+    osc.cpp \
+    stringvalue.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
