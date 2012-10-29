@@ -18,6 +18,7 @@
  */
 
 #include "atom/floatvalue.h"
+#include "atom/intvalue.h"
 #include <limits>
 #include <sstream>
 #include <ostream>
@@ -92,13 +93,22 @@ char FloatValue::doGetTypeTag() const
 double toFloat(const Value::ptr &value)
     throw(BadTypeTagError)
 {
-    if (value->getTypeTag() != FloatValue::TYPE_TAG)
+    double v;
+    if (value->getTypeTag() == FloatValue::TYPE_TAG)
+    {
+        v = FloatValue::convert(value)->getFloat();
+    }
+    else if (value->getTypeTag() == IntValue::TYPE_TAG)
+    {
+        v = (double)(IntValue::convert(value)->getInt());
+    }
+    else
     {
         std::ostringstream os;
         os << __FUNCTION__ << ": Expect float but got " << value->getTypeTag();
         throw BadTypeTagError(os.str().c_str());
     }
-    return FloatValue::convert(value)->getFloat();
+    return v;
 }
 
 } // end of namespace
