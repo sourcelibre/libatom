@@ -39,24 +39,24 @@ class IntValue: public Value
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
         static const char TYPE_TAG = 'i';
-        bool setInt(long int value);
-        long int getInt() const;
-        static Value::ptr create(long int value);
+        bool setInt(long long value);
+        long long getInt() const;
+        static Value::ptr create(long long value);
         static IntValue::ptr convert(const Value::ptr &from);
-        bool setRange(long int minimum, long int maximum);
-        bool setMax(long int maximum);
-        bool setMin(long int minimum);
-        long int getMax() const;
-        long int getMin() const;
+        bool setRange(long long minimum, long long maximum);
+        bool setMax(long long maximum);
+        bool setMin(long long minimum);
+        long long getMax() const;
+        long long getMin() const;
     private:
-        long int value_;
-        long int max_;
-        long int min_;
-        IntValue(long int value);
+        long long value_;
+        long long max_;
+        long long min_;
+        IntValue(long long value);
         virtual char doGetTypeTag() const;
 };
 
-long int toInt(const Value::ptr &value)
+long long toInt(const Value::ptr &value)
     throw(BadTypeTagError);
 
 } // end of namespace

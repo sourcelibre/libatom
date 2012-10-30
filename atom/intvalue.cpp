@@ -26,7 +26,7 @@
 
 namespace atom {
 
-bool IntValue::setInt(long int value)
+bool IntValue::setInt(long long value)
 {
     if (value > this->max_)
         return false;
@@ -35,11 +35,11 @@ bool IntValue::setInt(long int value)
     this->value_ = value;
     return true;
 }
-long int IntValue::getInt() const
+long long IntValue::getInt() const
 {
     return value_;
 }
-Value::ptr IntValue::create(long int value)
+Value::ptr IntValue::create(long long value)
 {
     IntValue::ptr ret(new IntValue(value));
     return std::tr1::static_pointer_cast<Value>(ret);
@@ -48,7 +48,7 @@ IntValue::ptr IntValue::convert(const Value::ptr &from)
 {
     return std::tr1::dynamic_pointer_cast<IntValue>(from);
 }
-bool IntValue::setRange(long int minimum, long int maximum)
+bool IntValue::setRange(long long minimum, long long maximum)
 {
     if (! this->setMin(minimum))
         return false;
@@ -56,50 +56,50 @@ bool IntValue::setRange(long int minimum, long int maximum)
         return false;
     return true;
 }
-bool IntValue::setMax(long int maximum)
+bool IntValue::setMax(long long maximum)
 {
-    if (maximum > std::numeric_limits<long int>::max())
+    if (maximum > std::numeric_limits<long long>::max())
         return false;
     this->max_ = maximum;
     return true;
 }
-bool IntValue::setMin(long int minimum)
+bool IntValue::setMin(long long minimum)
 {
-    if (minimum < std::numeric_limits<long int>::min())
+    if (minimum < std::numeric_limits<long long>::min())
         return false;
     this->min_ = minimum;
     return true;
 }
-long int IntValue::getMax() const
+long long IntValue::getMax() const
 {
     return this->max_;
 }
-long int IntValue::getMin() const
+long long IntValue::getMin() const
 {
     return this->min_;
 }
-IntValue::IntValue(long int value) :
+IntValue::IntValue(long long value) :
     value_(value)
 {
-    this->min_ = std::numeric_limits<long int>::min();
-    this->max_ = std::numeric_limits<long int>::max();
+    this->min_ = std::numeric_limits<long long>::min();
+    this->max_ = std::numeric_limits<long long>::max();
 }
 char IntValue::doGetTypeTag() const
 {
     return TYPE_TAG;
 }
 
-long int toInt(const Value::ptr &value)
+long long toInt(const Value::ptr &value)
     throw(BadTypeTagError)
 {
-    int v;
+    long long v;
     if (value->getTypeTag() == IntValue::TYPE_TAG)
     {
         v = IntValue::convert(value)->getInt();
     }
     else if (value->getTypeTag() == FloatValue::TYPE_TAG)
     {
-        v = (int)(FloatValue::convert(value)->getFloat());
+        v = (long long)(FloatValue::convert(value)->getFloat());
     }
     else
     {
