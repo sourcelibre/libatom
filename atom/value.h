@@ -39,6 +39,10 @@ class Value
         {
             return this->doGetTypeTag();
         }
+        bool isType(char type_tag) const
+        {
+            return this->getTypeTag() == type_tag;
+        }
         virtual ~Value() {}
     private:
         virtual char doGetTypeTag() const = 0;

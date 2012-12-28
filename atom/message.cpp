@@ -21,6 +21,8 @@
 #include <ostream>
 #include <iostream>
 #include <sstream>
+#include <cstdarg> // va_list
+#include <cstring> // strlen
 
 namespace atom {
 
@@ -117,6 +119,59 @@ std::string getTypeTags(const Message &message)
         os << value->getTypeTag();
     }
     return os.str();
+}
+
+Message createMessage(const char *types, ...)
+    throw(BadTypeTagError)
+{
+    Message result;
+
+    va_list arguments;
+    va_start(arguments, types);
+
+    for (int i = 0; types[i] != '\0'; ++i)
+    {
+        switch (types[i])
+        {
+            case FloatValue::TYPE_TAG:
+            {
+                double value = va_arg(arguments, double);
+                result.push_back(FloatValue::create(value));
+                break;
+            }
+            case IntValue::TYPE_TAG:
+            {
+                long int value = va_arg(arguments, long int);
+                result.push_back(IntValue::create(value));
+                break;
+            }
+            case BooleanValue::TYPE_TAG:
+            {
+                bool value = (bool) va_arg(arguments, int);
+                result.push_back(BooleanValue::create(value));
+                break;
+            }
+            case StringValue::TYPE_TAG:
+            {
+                const char *value = va_arg(arguments, const char*);
+                result.push_back(StringValue::create(value));
+                break;
+            }
+            case ListValue::TYPE_TAG:
+            case DictValue::TYPE_TAG:
+            case PointerValue::TYPE_TAG:
+            default:
+                {
+                    std::ostringstream os;
+                    os << __FUNCTION__ << ": Unsupported type tag: " << types[i] << " (types=\"" << types << "\") (length=" << std::strlen(types) << ")";
+                    throw BadTypeTagError(os.str().c_str());
+                }
+                break;
+        }
+    }
+
+    va_end(arguments);
+    return result;
 }
 
 } // end of namespace

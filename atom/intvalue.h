@@ -25,6 +25,9 @@
 #define __ATOM_INTVALUE_H__
 
 #include "atom/value.h"
+#include "atom/exceptions.h"
+#include <limits>
+#include <sstream>
 
 namespace atom {
 
@@ -36,33 +39,25 @@ class IntValue: public Value
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
         static const char TYPE_TAG = 'i';
-        void setInt(long int value)
-        {
-            this->value_ = value;
-        }
-        long int getInt() const
-        {
-            return value_;
-        }
-        static Value::ptr create(long int value)
-        {
-            IntValue::ptr ret(new IntValue(value));
-            return std::tr1::static_pointer_cast<Value>(ret);
-        }
-        static IntValue::ptr convert(const Value::ptr &from)
-        {
-            return std::tr1::dynamic_pointer_cast<IntValue>(from);
-        }
+        bool setInt(long long value);
+        long long getInt() const;
+        static Value::ptr create(long long value);
+        static IntValue::ptr convert(const Value::ptr &from);
+        bool setRange(long long minimum, long long maximum);
+        bool setMax(long long maximum);
+        bool setMin(long long minimum);
+        long long getMax() const;
+        long long getMin() const;
     private:
-        long int value_;
-        IntValue(long int value) :
-            value_(value)
-        {}
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        long long value_;
+        long long max_;
+        long long min_;
+        IntValue(long long value);
+        virtual char doGetTypeTag() const;
 };
+
+long long toInt(const Value::ptr &value)
+    throw(BadTypeTagError);
 
 } // end of namespace
 

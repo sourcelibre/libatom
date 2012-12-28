@@ -1,17 +1,34 @@
 Libatom release NEWS
 ====================
 
+2012-12-28 libatom 0.2.0
+------------------------
+This release is an official release in the 0.2 stable series.
+
+New Features:
+
+* IntValue and FloatValue now have the setMin, getMin, setMax and getMax methods.
+* Check that float/int is within range when setting it.
+* Add conversion from message to lo_message
+* Add toInt(), toFloat(), toString(), Value::isType()
+* Support va_list arguments
+* Add automatic conversion of floatvalue to int, and intvalue to float
+
+Bug fixes:
+
+* Put VERSION constant in the atom namespace
+* Actually run the tests
+* Various corrections in StringValue
+* Change from long int to long long
+
+
 2012-10-17 libatom 0.1.4
 ------------------------
 This release is a developer snapshot in the 0.1 unstable series. 
 
 New Features:
-* (none yet)
-add PointerValue and DictValue
 
-
-Bug fixes:
-* (none yet)
+* add PointerValue and DictValue
 
 
 2012-10-17 libatom 0.1.2
@@ -19,6 +36,7 @@ Bug fixes:
 This release is a developer snapshot in the 0.1 unstable series. 
 
 New Features:
+
 * Add IntValue, StringValue, BooleanValue, FloatValue, NullValue, ListValue
 * Remove Atom
 
@@ -30,5 +48,6 @@ This release is a developer snapshot in the 0.1 unstable series.
 It is the initial release of libatom.
 
 New Features:
+
 * Provide a generic container for simple data types.
 

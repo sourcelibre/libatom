@@ -26,6 +26,8 @@
 
 #include <string>
 #include "atom/value.h"
+#include "atom/exceptions.h"
+#include <sstream>
 
 namespace atom {
 
@@ -37,33 +39,19 @@ class StringValue: public Value
     public:
         typedef std::tr1::shared_ptr<StringValue> ptr;
         static const char TYPE_TAG = 's';
-        void setString(const char * value)
-        {
-            this->value_ = value;
-        }
-        const std::string & getString() const
-        {
-            return value_;
-        }
-        static Value::ptr create(const char * value)
-        {
-            StringValue::ptr ret(new StringValue(value));
-            return std::tr1::static_pointer_cast<Value>(ret);
-        }
-        static StringValue::ptr convert(const Value::ptr &from)
-        {
-            return std::tr1::dynamic_pointer_cast<StringValue>(from);
-        }
+        void setString(const char * value);
+        const std::string & getString() const;
+        static Value::ptr create(const char * value);
+        static StringValue::ptr convert(const Value::ptr &from);
+
     private:
         std::string value_;
-        StringValue(const char *value) :
-            value_(value)
-        {}
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        StringValue(const char *value);
+        virtual char doGetTypeTag() const;
 };
+
+std::string toString(const Value::ptr &value)
+    throw(BadTypeTagError);
 
 } // end of namespace
 

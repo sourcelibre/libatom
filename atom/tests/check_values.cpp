@@ -3,7 +3,6 @@
 #include "atom/message.h"
 
 using namespace atom;
-
 static const bool VERBOSE = true;
 
 class Dummy : public AbstractObject
@@ -60,9 +59,49 @@ bool check_messages()
     return true;
 }
 
+bool check_range()
+{
+    std::vector<Value::ptr> message;
+    message.push_back(IntValue::create(2));
+    message.push_back(FloatValue::create(3.14159));
+    
+    IntValue::ptr i = IntValue::convert(message[0]);
+    FloatValue::ptr f = FloatValue::convert(message[1]);
+
+    if (VERBOSE)
+    {
+        std::cout << "Float range: [" << f->getMin() << ", " << f->getMax() << "]" << std::endl;
+        std::cout << "Int   range: [" << i->getMin() << ", " << i->getMax() << "]" << std::endl;
+    }
+
+    i->setRange(1, 100);
+    if (i->setInt(200))
+    {
+        std::cout << "Could setInt even though not within range." << std::endl;
+        return false;
+    }
+
+    f->setRange(1.0, 100.0);
+    if (f->setFloat(200.0))
+    {
+        std::cout << "Could setFloat even though not within range." << std::endl;
+        return false;
+    }
+    
+    f->setFloat(10.0);
+    if (f->getFloat() != 10.0)
+    {
+        std::cout << "Float stored doesn't match expected." << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main(int /* argc */, char ** /* argv */)
 {
     if (! check_messages())
+        return 1;
+    if (! check_range())
         return 1;
     return 0;
 }
