@@ -64,6 +64,12 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
         std::map<std::string, Value::ptr> map = (DictValue::convert(value))->getMap();
         os << map;
     }
+    else if (value->getTypeTag() == BlobValue::TYPE_TAG)
+    {
+        os << "\"";
+        os << BlobValue::convert(value)->getValue(); // prints the pointer!
+        os << "\"";
+    }
     else
     {
         std::cerr << __FUNCTION__ << ": Unsupported type \"" << value->getTypeTag() << "\"." << std::endl;
