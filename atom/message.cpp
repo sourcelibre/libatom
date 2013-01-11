@@ -23,6 +23,7 @@
 #include <sstream>
 #include <cstdarg> // va_list
 #include <cstring> // strlen
+#include <cstdio>
 
 namespace atom {
 
@@ -66,9 +67,8 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     }
     else if (value->getTypeTag() == BlobValue::TYPE_TAG)
     {
-        os << "\"";
-        os << BlobValue::convert(value)->getValue(); // prints the pointer!
-        os << "\"";
+        char * tmp = BlobValue::convert(value)->getValue();
+        os << &tmp; // prints the pointer!
     }
     else
     {
