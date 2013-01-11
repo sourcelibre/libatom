@@ -74,6 +74,7 @@ class Blob
          */
         void debugPrint() const;
         static size_t findNextLargerPowerOfTwo(size_t n);
+        void setValue(const char *data, size_t length);
     private:
         char *value_;
         size_t size_;
@@ -84,7 +85,7 @@ class Blob
          * Returns 256, 512, 1024, 2048, etc... that is closest smaller to target.
          */
         size_t findSizeToStore(size_t target);
-        void increaseSize(size_t size);
+        void increaseSize(size_t length);
 };
 
 } // end of namespace

@@ -35,6 +35,7 @@ Blob::Blob(size_t initial_allocation_size) :
 
 char * Blob::get() const
 {
+    // TODO: return a const pointer?
     return value_;
 }
 
@@ -63,12 +64,12 @@ void Blob::append(const char *data, size_t length)
     size_ = size_ + length;
 }
 
-void Blob::increaseSize(size_t size)
+void Blob::increaseSize(size_t length)
 {
-    size_t how_many_byte_more = size - allocated_;
-    value_ = (char *) realloc((void *) value_, size);
+    size_t how_many_byte_more = length - allocated_;
+    value_ = (char *) realloc((void *) value_, length);
     memset(value_ + allocated_, 0, how_many_byte_more);
-    allocated_ = size;
+    allocated_ = length;
 }
 
 size_t Blob::findSizeToStore(size_t target)
@@ -103,6 +104,14 @@ void Blob::clear()
     value_ = (char *) malloc(initial_allocation_size_);
     memset(value_, 0, initial_allocation_size_);
     allocated_ = initial_allocation_size_;
+}
+
+void Blob::setValue(const char *data, size_t length)
+{
+    // FIXME: should not free and reallocate memmory here.
+    // TODO: handle no more memory error
+    clear();
+    append(data, length);
 }
 
 void Blob::debugPrint() const

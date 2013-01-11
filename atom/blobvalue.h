@@ -18,39 +18,40 @@
  */
 
 /** @file
- * The Message typedef
+ * The BlobValue class.
  */
 
-#ifndef __ATOM_MESSAGE_H__
-#define __ATOM_MESSAGE_H__
+#ifndef __ATOM_BLOBVALUE_H__
+#define __ATOM_BLOBVALUE_H__
 
-#include "atom/value.h"
-#include "atom/blobvalue.h"
-#include "atom/intvalue.h"
-#include "atom/floatvalue.h"
-#include "atom/stringvalue.h"
-#include "atom/listvalue.h"
-#include "atom/booleanvalue.h"
-#include "atom/nullvalue.h"
-#include "atom/dictvalue.h"
-#include "atom/pointervalue.h"
-#include <vector>
-#include <map>
 #include <string>
-#include <ostream>
+#include "atom/value.h"
+#include "atom/blob.h"
 
 namespace atom {
 
-typedef std::vector<Value::ptr> Message;
+/**
+ * Stores binary data.
+ */
+class BlobValue: public Value
+{
+    public:
+        typedef std::tr1::shared_ptr<BlobValue> ptr;
+        static const char TYPE_TAG = 'B';
+        void setValue(const char * value, size_t length);
+        // TODO: const
+        char * getValue();
+        void clear();
+        static Value::ptr create(const char * value, size_t length);
+        size_t getSize() const;
+        void append(const char * value, size_t size);
+        static BlobValue::ptr convert(const Value::ptr &from);
 
-std::ostream & operator<<(std::ostream &os, const Message& message);
-std::ostream & operator<<(std::ostream &os, const Value& value);
-std::ostream & operator<<(std::ostream &os, const std::map<std::string, Value::ptr>& map);
-
-std::string getTypeTags(const Message &message);
-
-Message createMessage(const char *types, ...)
-    throw(BadTypeTagError);
+    private:
+        Blob blob_;
+        BlobValue(const char *value, size_t size);
+        virtual char doGetTypeTag() const;
+};
 
 } // end of namespace
 
