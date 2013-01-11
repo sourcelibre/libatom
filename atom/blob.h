@@ -34,6 +34,11 @@ namespace atom {
 class Blob
 {
     public:
+        /**
+         * A recommended initial allocation size is 8 (on 64-bit machines)
+         * for small binary objects, and much more (powers of two) for
+         * larger ones.
+         */
         Blob(size_t initial_allocation_size = 1);
         ~Blob();
         /**
