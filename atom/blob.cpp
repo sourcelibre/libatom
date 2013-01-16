@@ -21,6 +21,8 @@
 #include <stdlib.h>
 #include <cstring>
 #include "atom/blob.h"
+#include <sstream>
+#include <stdio.h>
 
 namespace atom {
 
@@ -133,6 +135,60 @@ void Blob::debugPrint() const
     std::cout << std::endl;
     std::cout << " text: " << value_ << std::endl; // maybe it doesnt end with zero!
     std::cout << "-----------" << std::endl;
+}
+
+std::string Blob::getHexadecimalString(atom::Blob &blob, size_t max_length, bool use_space, bool use_columns, size_t columns)
+{
+    unsigned char *value = (unsigned char *) blob.get();
+    std::ostringstream os;
+    //os << "0x";
+    for (size_t i = 0; i < blob.getSize(); i++)
+    {
+        if (i >= max_length)
+        {
+            os << "...";
+            break;
+        }
+        if (value[i] <= 0xf)
+        {
+            os << "0";
+            char buf[2] = "0";
+            snprintf(buf, 2, "%x", value[i]);
+            os << buf;
+        }
+        else
+        {
+            char buf[3] = "00";
+            snprintf(buf, 3, "%x", value[i]);
+            os << buf;
+        }
+        if (use_space)
+            os << " ";
+        if (use_columns)
+        {
+            if ((i % columns) == 0 && i != 0)
+                os << std::endl;
+        }
+    }
+    return os.str();
+}
+
+std::string Blob::getString(atom::Blob &blob, size_t max_length)
+{
+    char *value = blob.get();
+    std::ostringstream os;
+    for (size_t i = 0; i < blob.getSize(); i++)
+    {
+        if (i >= max_length)
+        {
+            os << "...";
+            break;
+        }
+        if (value[i] == 0)
+            break;
+        os << value[i];
+    }
+    return os.str();
 }
 
 } // end of namespace

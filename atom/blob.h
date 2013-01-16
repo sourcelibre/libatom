@@ -80,6 +80,8 @@ class Blob
         void debugPrint() const;
         static size_t findNextLargerPowerOfTwo(size_t n);
         void setValue(const char *data, size_t length);
+        static std::string getString(atom::Blob &blob, size_t max_length=1000);
+        static std::string getHexadecimalString(atom::Blob &blob, size_t max_length=1000, bool use_space=true, bool use_columns=true, size_t columns=24);
     private:
         char *value_;
         size_t size_;
