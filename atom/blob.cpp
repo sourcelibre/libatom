@@ -104,6 +104,7 @@ void Blob::clear()
     value_ = (char *) malloc(initial_allocation_size_);
     memset(value_, 0, initial_allocation_size_);
     allocated_ = initial_allocation_size_;
+    size_ = 0;
 }
 
 void Blob::setValue(const char *data, size_t length)
