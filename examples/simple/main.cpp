@@ -51,10 +51,22 @@ static void example_2()
     std::cout << message << std::endl;
 }
 
+static void min_max()
+{
+    atom::Message message = atom::createMessage("if", 2, 3.14159);
+    std::cout << "int range: " <<
+        atom::IntValue::convert(message[0])->getMin() << " " <<
+        atom::IntValue::convert(message[0])->getMax() << std::endl;
+    std::cout << "float range: " <<
+        atom::FloatValue::convert(message[1])->getMin() << " " <<
+        atom::FloatValue::convert(message[1])->getMax() << std::endl;
+}
+
 int main(int /* argc */, char ** /*argv*/)
 {
     example_1();
     example_2();
+    min_max();
     return 0;
 }
 
