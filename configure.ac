@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT(atom, [0.2.1], [http://code.sat.qc.ca/redmine/projects/libatom/issues], [libatom], [http://code.sat.qc.ca/redmine/projects/libatom])
+AC_INIT(atom, [0.2.3], [http://code.sat.qc.ca/redmine/projects/libatom/issues], [libatom], [http://code.sat.qc.ca/redmine/projects/libatom])
 AC_CONFIG_MACRO_DIR([m4])
 AC_MSG_NOTICE([Configuring libatom])
 AM_INIT_AUTOMAKE([subdir-objects -Wno-portability])
