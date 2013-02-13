@@ -23,6 +23,7 @@
 #include <sstream>
 #include <cstdarg> // va_list
 #include <cstring> // strlen
+#include <cstdio>
 
 namespace atom {
 
@@ -63,6 +64,11 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     {
         std::map<std::string, Value::ptr> map = (DictValue::convert(value))->getMap();
         os << map;
+    }
+    else if (value->getTypeTag() == BlobValue::TYPE_TAG)
+    {
+        char * tmp = BlobValue::convert(value)->getValue();
+        os << &tmp; // prints the pointer!
     }
     else
     {

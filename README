@@ -2,6 +2,18 @@ Libatom
 =======
 Libatom is a generic container for values.
 
+Supported types:
+
+'B': blob (array of char of a variable size)
+'b': boolean (bool)
+'D': dict (map of string to values)
+'f': float (double, whose minimum is 2.22507e-308 and maximum is 1.79769e+308)
+'i': int (long long, whose minimum is -9223372036854775808 and maximum is 9223372036854775807)
+'L': list (vector of values)
+'N': null (contains no data)
+'P': pointer (shared pointer to an instance of a child class of atom::AbstractObject)
+'s': string (std::string)
+
 For more information, contact one of the authors:
 
 * Alexandre Quessy <alexandre@quessy.net>

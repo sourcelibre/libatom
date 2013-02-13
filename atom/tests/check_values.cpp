@@ -23,7 +23,10 @@ class Dummy : public AbstractObject
 
 bool check_messages()
 {
+    char blobstring[] = "this is a blob";
+
     std::vector<Value::ptr> message;
+    message.push_back(BlobValue::create(blobstring, sizeof(blobstring)));
     message.push_back(IntValue::create(2));
     message.push_back(FloatValue::create(3.14159));
     message.push_back(StringValue::create("hello"));
