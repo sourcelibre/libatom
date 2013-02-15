@@ -67,7 +67,7 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     }
     else if (value->getTypeTag() == BlobValue::TYPE_TAG)
     {
-        char * tmp = BlobValue::convert(value)->getValue();
+        Byte * tmp = BlobValue::convert(value)->getValue();
         os << &tmp; // prints the pointer!
     }
     else
