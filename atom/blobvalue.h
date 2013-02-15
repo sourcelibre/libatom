@@ -38,18 +38,19 @@ class BlobValue: public Value
     public:
         typedef std::tr1::shared_ptr<BlobValue> ptr;
         static const char TYPE_TAG = 'B';
-        void setValue(const char * value, size_t length);
+        void setValue(const Byte * value, size_t length);
         // TODO: const
-        char * getValue();
+        Byte * getValue();
         void clear();
-        static Value::ptr create(const char * value, size_t length);
+        static Value::ptr create(const Byte * value, size_t length);
         size_t getSize() const;
-        void append(const char * value, size_t size);
+        void append(const Byte * value, size_t size);
         static BlobValue::ptr convert(const Value::ptr &from);
+        std::string getHex() const;
 
     private:
         Blob blob_;
-        BlobValue(const char *value, size_t size);
+        BlobValue(const Byte *value, size_t size);
         virtual char doGetTypeTag() const;
 };
 

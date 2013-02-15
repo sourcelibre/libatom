@@ -31,11 +31,11 @@ Blob::Blob(size_t initial_allocation_size) :
 {
     initial_allocation_size_ = findNextLargerPowerOfTwo(initial_allocation_size);
     allocated_ = initial_allocation_size_;
-    value_ = (char *) malloc(initial_allocation_size_);
+    value_ = (Byte *) malloc(initial_allocation_size_);
     memset(value_, 0, initial_allocation_size_);
 }
 
-char * Blob::get() const
+Byte * Blob::get() const
 {
     // TODO: return a const pointer?
     return value_;
@@ -46,14 +46,14 @@ Blob::~Blob()
     free(value_);
 }
 
-void Blob::append(char data)
+void Blob::append(Byte data)
 {
-    char array[1];
+    Byte array[1];
     array[0] = data;
     append(array, 1);
 }
 
-void Blob::append(const char *data, size_t length)
+void Blob::append(const Byte *data, size_t length)
 {
     size_t newsize = size_ + length;
     if (newsize > allocated_)
@@ -69,7 +69,7 @@ void Blob::append(const char *data, size_t length)
 void Blob::increaseSize(size_t length)
 {
     size_t how_many_byte_more = length - allocated_;
-    value_ = (char *) realloc((void *) value_, length);
+    value_ = (Byte *) realloc((void *) value_, length);
     memset(value_ + allocated_, 0, how_many_byte_more);
     allocated_ = length;
 }
@@ -103,13 +103,13 @@ size_t Blob::getAllocated() const
 void Blob::clear()
 {
     free(value_);
-    value_ = (char *) malloc(initial_allocation_size_);
+    value_ = (Byte *) malloc(initial_allocation_size_);
     memset(value_, 0, initial_allocation_size_);
     allocated_ = initial_allocation_size_;
     size_ = 0;
 }
 
-void Blob::setValue(const char *data, size_t length)
+void Blob::setValue(const Byte *data, size_t length)
 {
     // FIXME: should not free and reallocate memmory here.
     // TODO: handle no more memory error
@@ -137,9 +137,9 @@ void Blob::debugPrint() const
     std::cout << "-----------" << std::endl;
 }
 
-std::string Blob::getHexadecimalString(atom::Blob &blob, size_t max_length, bool use_space, bool use_columns, size_t columns)
+std::string Blob::getHexadecimalString(const atom::Blob &blob, size_t max_length, bool use_space, bool use_columns, size_t columns)
 {
-    unsigned char *value = (unsigned char *) blob.get();
+    Byte *value = (Byte *) blob.get();
     std::ostringstream os;
     //os << "0x";
     for (size_t i = 0; i < blob.getSize(); i++)
@@ -175,7 +175,7 @@ std::string Blob::getHexadecimalString(atom::Blob &blob, size_t max_length, bool
 
 std::string Blob::getString(atom::Blob &blob, size_t max_length)
 {
-    char *value = blob.get();
+    Byte *value = blob.get();
     std::ostringstream os;
     for (size_t i = 0; i < blob.getSize(); i++)
     {
