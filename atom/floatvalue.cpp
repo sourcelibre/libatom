@@ -26,7 +26,7 @@
 
 namespace atom {
 
-bool FloatValue::setFloat(double value)
+bool FloatValue::setFloat(Float value)
 {
     if (value > this->max_)
         return false;
@@ -35,11 +35,11 @@ bool FloatValue::setFloat(double value)
     this->value_ = value;
     return true;
 }
-double FloatValue::getFloat() const
+Float FloatValue::getFloat() const
 {
     return value_;
 }
-Value::ptr FloatValue::create(double value)
+Value::ptr FloatValue::create(Float value)
 {
     FloatValue::ptr ret(new FloatValue(value));
     return std::tr1::static_pointer_cast<Value>(ret);
@@ -48,7 +48,7 @@ FloatValue::ptr FloatValue::convert(const Value::ptr &from)
 {
     return std::tr1::dynamic_pointer_cast<FloatValue>(from);
 }
-bool FloatValue::setRange(double minimum, double maximum)
+bool FloatValue::setRange(Float minimum, Float maximum)
 {
     if (! this->setMin(minimum))
         return false;
@@ -56,51 +56,51 @@ bool FloatValue::setRange(double minimum, double maximum)
         return false;
     return true;
 }
-bool FloatValue::setMax(double maximum)
+bool FloatValue::setMax(Float maximum)
 {
-    if (maximum > std::numeric_limits<double>::max())
+    if (maximum > std::numeric_limits<Float>::max())
         return false;
     this->max_ = maximum;
     return true;
 }
-bool FloatValue::setMin(double minimum)
+bool FloatValue::setMin(Float minimum)
 {
-    if (minimum < std::numeric_limits<double>::min())
+    if (minimum < std::numeric_limits<Float>::min())
         return false;
     this->min_ = minimum;
     return true;
 }
-double FloatValue::getMax() const
+Float FloatValue::getMax() const
 {
     return this->max_;
 }
-double FloatValue::getMin() const
+Float FloatValue::getMin() const
 {
     return this->min_;
 }
 
-FloatValue::FloatValue(double value) :
+FloatValue::FloatValue(Float value) :
     value_(value)
 {
-    this->min_ = std::numeric_limits<double>::min();
-    this->max_ = std::numeric_limits<double>::max();
+    this->min_ = std::numeric_limits<Float>::min();
+    this->max_ = std::numeric_limits<Float>::max();
 }
 char FloatValue::doGetTypeTag() const
 {
     return TYPE_TAG;
 }
 
-double toFloat(const Value::ptr &value)
+Float toFloat(const Value::ptr &value)
     throw(BadTypeTagError)
 {
-    double v;
+    Float v;
     if (value->getTypeTag() == FloatValue::TYPE_TAG)
     {
         v = FloatValue::convert(value)->getFloat();
     }
     else if (value->getTypeTag() == IntValue::TYPE_TAG)
     {
-        v = (double)(IntValue::convert(value)->getInt());
+        v = (Float)(IntValue::convert(value)->getInt());
     }
     else
     {
