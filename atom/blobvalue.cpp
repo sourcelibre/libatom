@@ -69,7 +69,10 @@ char BlobValue::doGetTypeTag() const
 
 std::string BlobValue::getHex() const
 {
-    return Blob::getHexadecimalString(this->blob_);
+    static const size_t MAX_LENGTH = 20;
+    static const bool USE_SPACES = false;
+    static const bool USE_COLS = false;
+    return Blob::getHexadecimalString(this->blob_, MAX_LENGTH, USE_SPACES, USE_COLS);
 }
 
 } // end of namespace

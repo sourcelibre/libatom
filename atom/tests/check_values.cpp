@@ -24,6 +24,7 @@ class Dummy : public AbstractObject
 bool check_messages()
 {
     Byte blobstring[] = "this is a blob";
+    Byte blobstring2[] = "this is a larger blob that contains a string.";
 
     std::vector<Value::ptr> message;
     message.push_back(BlobValue::create(blobstring, sizeof(blobstring)));
