@@ -52,6 +52,13 @@ Value::ptr BlobValue::create(const Byte * value, size_t length)
     return std::tr1::static_pointer_cast<Value>(ret);
 }
 
+Value::ptr BlobValue::create()
+{
+    Byte *empty = NULL;
+    BlobValue::ptr ret(new BlobValue(empty, 0));
+    return std::tr1::static_pointer_cast<Value>(ret);
+}
+
 BlobValue::ptr BlobValue::convert(const Value::ptr &from)
 {
     return std::tr1::dynamic_pointer_cast<BlobValue>(from);
