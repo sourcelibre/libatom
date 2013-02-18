@@ -31,6 +31,8 @@
 
 namespace atom {
 
+typedef long long Int;
+
 /**
  * Stores an integer.
  */
@@ -39,24 +41,24 @@ class IntValue: public Value
     public:
         typedef std::tr1::shared_ptr<IntValue> ptr;
         static const char TYPE_TAG = 'i';
-        bool setInt(long long value);
-        long long getInt() const;
-        static Value::ptr create(long long value);
+        bool setInt(Int value);
+        Int getInt() const;
+        static Value::ptr create(Int value);
         static IntValue::ptr convert(const Value::ptr &from);
-        bool setRange(long long minimum, long long maximum);
-        bool setMax(long long maximum);
-        bool setMin(long long minimum);
-        long long getMax() const;
-        long long getMin() const;
+        bool setRange(Int minimum, Int maximum);
+        bool setMax(Int maximum);
+        bool setMin(Int minimum);
+        Int getMax() const;
+        Int getMin() const;
     private:
-        long long value_;
-        long long max_;
-        long long min_;
-        IntValue(long long value);
+        Int value_;
+        Int max_;
+        Int min_;
+        IntValue(Int value);
         virtual char doGetTypeTag() const;
 };
 
-long long toInt(const Value::ptr &value)
+Int toInt(const Value::ptr &value)
     throw(BadTypeTagError);
 
 } // end of namespace
