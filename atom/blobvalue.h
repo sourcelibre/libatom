@@ -43,6 +43,7 @@ class BlobValue: public Value
         Byte * getValue();
         void clear();
         static Value::ptr create(const Byte * value, size_t length);
+        static Value::ptr create();
         size_t getSize() const;
         void append(const Byte * value, size_t size);
         static BlobValue::ptr convert(const Value::ptr &from);
