@@ -85,6 +85,10 @@ class Blob
         void setValue(const Byte *data, size_t length);
         static std::string getString(atom::Blob &blob, size_t max_length=1000);
         static std::string getHexadecimalString(const atom::Blob &blob, size_t max_length=1000, bool use_space=true, bool use_columns=true, size_t columns=24);
+
+        bool operator==(const Blob &other) const;
+        bool operator!=(const Blob &other) const;
+
     private:
         Byte *value_;
         size_t size_;
@@ -97,6 +101,8 @@ class Blob
         size_t findSizeToStore(size_t target);
         void increaseSize(size_t length);
 };
+
+std::ostream &operator<<(std::ostream &os, const Blob &blob);
 
 } // end of namespace
 

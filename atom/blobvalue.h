@@ -25,6 +25,7 @@
 #define __ATOM_BLOBVALUE_H__
 
 #include <string>
+#include <ostream>
 #include "atom/value.h"
 #include "atom/blob.h"
 
@@ -48,12 +49,18 @@ class BlobValue: public Value
         void append(const Byte * value, size_t size);
         static BlobValue::ptr convert(const Value::ptr &from);
         std::string getHex() const;
+        const Blob& getBlob() const;
+
+        bool operator==(const BlobValue &other) const;
+        bool operator!=(const BlobValue &other) const;
 
     private:
         Blob blob_;
         BlobValue(const Byte *value, size_t size);
         virtual char doGetTypeTag() const;
 };
+
+std::ostream &operator<<(std::ostream &os, const BlobValue &value);
 
 } // end of namespace
 

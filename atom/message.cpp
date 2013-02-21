@@ -67,7 +67,7 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     }
     else if (value->getTypeTag() == BlobValue::TYPE_TAG)
     {
-        os << "0x" << BlobValue::convert(value)->getHex();
+        os << *(BlobValue::convert(value).get());
     }
     else
     {

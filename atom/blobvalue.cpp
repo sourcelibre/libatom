@@ -82,5 +82,26 @@ std::string BlobValue::getHex() const
     return Blob::getHexadecimalString(this->blob_, MAX_LENGTH, USE_SPACES, USE_COLS);
 }
 
+const Blob& BlobValue::getBlob() const
+{
+    return blob_;
+}
+
+std::ostream &operator<<(std::ostream &os, const BlobValue &value)
+{
+    os << value.getBlob();
+    return os;
+}
+
+bool BlobValue::operator==(const BlobValue &other) const
+{
+    return this->blob_ == other.getBlob();
+}
+
+bool BlobValue::operator!=(const BlobValue &other) const
+{
+    return this->blob_ != other.getBlob();
+}
+
 } // end of namespace
 

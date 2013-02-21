@@ -54,6 +54,12 @@ bool check_messages()
     map["blob_with_larger_text"] = BlobValue::create(blobstring2, sizeof(blobstring2));
     message.push_back(DictValue::create(map));
 
+    if (map != map)
+    {
+        std::cout << "The two maps don't match!" << std::endl;
+        return false;
+    }
+
     message.push_back(PointerValue::create(std::tr1::dynamic_pointer_cast<AbstractObject>(Dummy::ptr(new Dummy()))));
     
     std::ostringstream os;

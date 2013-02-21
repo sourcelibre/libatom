@@ -191,5 +191,42 @@ std::string Blob::getString(atom::Blob &blob, size_t max_length)
     return os.str();
 }
 
+bool Blob::operator!=(const Blob &other) const
+{
+    return ! (*this == other);
+}
+
+bool Blob::operator==(const Blob &other) const
+{
+    if (this->getSize() != other.getSize())
+        return false;
+    else
+    {
+        // bynary compare!
+        // FIXME: could be optimized
+        Byte *bytes = other.get();
+        for (size_t i = 0; i < other.getSize(); i++)
+        {
+            if (bytes[i] != this->value_[i])
+                return false;
+        }
+        return true;
+    }
+}
+
+std::ostream &operator<<(std::ostream &os, const Blob &blob)
+{
+    static const size_t MAX_LENGTH = 20;
+    static const bool USE_SPACES = false;
+    static const bool USE_COLS = false;
+    static const bool USE_0X_PREFIX = true;
+
+    if (USE_0X_PREFIX)
+        os << "0x";
+
+    os << Blob::getHexadecimalString(blob, MAX_LENGTH, USE_SPACES, USE_COLS);
+    return os;
+}
+
 } // end of namespace
 
