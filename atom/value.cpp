@@ -17,32 +17,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * The Value class.
- */
-
-#ifndef __ATOM_VALUE_H__
-#define __ATOM_VALUE_H__
-
-#include <tr1/memory>
+#include "atom/value.h"
 
 namespace atom {
 
-/**
- * Generic container for data.
- */
-class Value
+char Value::getTypeTag() const
 {
-    public:
-        typedef std::tr1::shared_ptr<Value> ptr;
-        char getTypeTag() const;
-        bool isType(char type_tag) const;
-        virtual ~Value() {}
-    private:
-        virtual char doGetTypeTag() const = 0;
-};
+    return this->doGetTypeTag();
+}
+
+bool Value::isType(char type_tag) const
+{
+    return this->getTypeTag() == type_tag;
+}
 
 } // end of namespace
-
-#endif // include guard
 

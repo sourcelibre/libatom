@@ -35,7 +35,8 @@ libatom_@ATOM_API_VERSION@_la_SOURCES = \
     floatvalue.cpp \
     message.cpp \
     osc.cpp \
-    stringvalue.cpp
+    stringvalue.cpp \
+    value.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libatom_@ATOM_API_VERSION@_la_include_HEADERS = \
