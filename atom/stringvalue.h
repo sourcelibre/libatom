@@ -53,6 +53,8 @@ class StringValue: public Value
 std::string toString(const Value::ptr &value)
     throw(BadTypeTagError);
 
+std::ostream & operator<<(std::ostream &os, const StringValue& value);
+
 } // end of namespace
 
 #endif // include guard

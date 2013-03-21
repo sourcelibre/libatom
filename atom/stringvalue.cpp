@@ -68,5 +68,14 @@ std::string toString(const Value::ptr &value)
     return StringValue::convert(value)->getString();
 }
 
+std::ostream & operator<<(std::ostream &os, const StringValue& value)
+{
+	os << "\"";
+	// TODO: maybe escape the strings in case it has quotes, or so?
+    os << value.getString();
+    os << "\"";
+    return os;
+}
+
 } // end of namespace
 

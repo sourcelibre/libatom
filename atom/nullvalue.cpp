@@ -17,17 +17,35 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * Provides version info for libatom.
- */
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#include "atom/nullvalue.h"
 
 namespace atom {
 
-const char * const VERSION = "@PACKAGE_VERSION@";
+Value::ptr NullValue::create()
+{
+    NullValue::ptr ret(new NullValue());
+    return std::tr1::static_pointer_cast<Value>(ret);
+}
+
+NullValue::ptr NullValue::convert(const Value::ptr &from)
+{
+    return std::tr1::dynamic_pointer_cast<NullValue>(from);
+}
+
+NullValue::NullValue()
+{}
+
+char NullValue::doGetTypeTag() const
+{
+    return TYPE_TAG;
+}
+
+std::ostream & operator<<(std::ostream &os, const NullValue& /* value */)
+{
+	os << "null";
+    return os;
+}
 
 } // end of namespace
 
-#endif // __VERSION_H__
 

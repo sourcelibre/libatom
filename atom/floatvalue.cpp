@@ -111,4 +111,10 @@ Float toFloat(const Value::ptr &value)
     return v;
 }
 
+std::ostream & operator<<(std::ostream &os, const FloatValue& value)
+{
+    os << value.getFloat();
+    return os;
+}
+
 } // end of namespace

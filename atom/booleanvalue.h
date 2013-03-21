@@ -36,33 +36,17 @@ class BooleanValue: public Value
     public:
         typedef std::tr1::shared_ptr<BooleanValue> ptr;
         static const char TYPE_TAG = 'b';
-        void setBoolean(bool value)
-        {
-            this->value_ = value;
-        }
-        bool getBoolean() const
-        {
-            return value_;
-        }
-        static Value::ptr create(bool value)
-        {
-            BooleanValue::ptr ret(new BooleanValue(value));
-            return std::tr1::static_pointer_cast<Value>(ret);
-        }
-        static BooleanValue::ptr convert(const Value::ptr &from)
-        {
-            return std::tr1::dynamic_pointer_cast<BooleanValue>(from);
-        }
+        void setBoolean(bool value);
+        bool getBoolean() const;
+        static Value::ptr create(bool value);
+        static BooleanValue::ptr convert(const Value::ptr &from);
     private:
         bool value_;
-        BooleanValue(bool value) :
-            value_(value)
-        {}
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        BooleanValue(bool value);
+        virtual char doGetTypeTag() const;
 };
+
+std::ostream & operator<<(std::ostream &os, const BooleanValue& value);
 
 } // end of namespace
 

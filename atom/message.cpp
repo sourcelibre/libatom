@@ -29,49 +29,40 @@ namespace atom {
 
 std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
 {
-    if (value->getTypeTag() == IntValue::TYPE_TAG)
+	TypeTag typeTag = value->getTypeTag();
+	
+    switch (typeTag)
     {
-        os << IntValue::convert(value)->getInt();
-    }
-    else if (value->getTypeTag() == StringValue::TYPE_TAG)
-    {
-        os << "\"";
-        os << StringValue::convert(value)->getString();
-        os << "\"";
-    }
-    else if (value->getTypeTag() == ListValue::TYPE_TAG)
-    {
-        std::vector<Value::ptr> list = (ListValue::convert(value))->getList();
-        os << list;
-    }
-    else if (value->getTypeTag() == FloatValue::TYPE_TAG)
-    {
-        os << FloatValue::convert(value)->getFloat();
-    }
-    else if (value->getTypeTag() == BooleanValue::TYPE_TAG)
-    {
-        os << (BooleanValue::convert(value)->getBoolean() ? "true" : "false");
-    }
-    else if (value->getTypeTag() == NullValue::TYPE_TAG)
-    {
-        os << "null";
-    }
-    else if (value->getTypeTag() == PointerValue::TYPE_TAG)
-    {
-        os << "*" << PointerValue::convert(value)->getPointer().get();
-    }
-    else if (value->getTypeTag() == DictValue::TYPE_TAG)
-    {
-        std::map<std::string, Value::ptr> map = (DictValue::convert(value))->getMap();
-        os << map;
-    }
-    else if (value->getTypeTag() == BlobValue::TYPE_TAG)
-    {
+	case IntValue::TYPE_TAG:
+        os << *(IntValue::convert(value).get());
+        break;
+    case StringValue::TYPE_TAG:
+		os << *(StringValue::convert(value).get());
+		break;
+    case ListValue::TYPE_TAG:
+        os << *(ListValue::convert(value).get());
+        break;
+    case FloatValue::TYPE_TAG:
+        os << *(FloatValue::convert(value).get());
+		break;
+    case BooleanValue::TYPE_TAG:
+        os << *(BooleanValue::convert(value).get());
+		break;
+    case NullValue::TYPE_TAG:
+        os << *(NullValue::convert(value).get());
+		break;
+    case PointerValue::TYPE_TAG:
+        os << *(PointerValue::convert(value).get());
+		break;
+    case DictValue::TYPE_TAG:
+        os << *(DictValue::convert(value).get());
+		break;
+    case BlobValue::TYPE_TAG:
         os << *(BlobValue::convert(value).get());
-    }
-    else
-    {
+		break;
+    default:
         std::cerr << __FUNCTION__ << ": Unsupported type \"" << value->getTypeTag() << "\"." << std::endl;
+        break;
     }
     return os;
 }

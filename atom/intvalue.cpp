@@ -110,5 +110,10 @@ Int toInt(const Value::ptr &value)
     return v;
 }
 
-} // end of namespace
+std::ostream & operator<<(std::ostream &os, const IntValue& value)
+{
+    os << value.getInt();
+    return os;
+}
 
+} // end of namespace

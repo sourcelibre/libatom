@@ -18,16 +18,50 @@
  */
 
 /** @file
- * Provides version info for libatom.
+ * The BooleanValue class.
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
+
+#include "atom/booleanvalue.h"
 
 namespace atom {
 
-const char * const VERSION = "@PACKAGE_VERSION@";
+void BooleanValue::setBoolean(bool value)
+{
+    this->value_ = value;
+}
+
+bool BooleanValue::getBoolean() const
+{
+    return value_;
+}
+
+static Value::ptr BooleanValue::create(bool value)
+{
+    BooleanValue::ptr ret(new BooleanValue(value));
+    return std::tr1::static_pointer_cast<Value>(ret);
+}
+
+static BooleanValue::ptr BooleanValue::convert(const Value::ptr &from)
+{
+    return std::tr1::dynamic_pointer_cast<BooleanValue>(from);
+}
+
+BooleanValue::BooleanValue(bool value) :
+    value_(value)
+{}
+
+virtual char BooleanValue::doGetTypeTag() const
+{
+    return TYPE_TAG;
+}
+
+std::ostream & operator<<(std::ostream &os, const BooleanValue& value)
+{
+	os << (value.getBoolean() ? "true" : "false");
+    return os;
+}
 
 } // end of namespace
 
-#endif // __VERSION_H__
+#endif // include guard
 

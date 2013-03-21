@@ -58,6 +58,8 @@ class FloatValue: public Value
 Float toFloat(const Value::ptr &value)
     throw(BadTypeTagError);
 
+std::ostream & operator<<(std::ostream &os, const FloatValue& value);
+
 } // end of namespace
 
 #endif // include guard

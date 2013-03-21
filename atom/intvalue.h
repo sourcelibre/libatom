@@ -61,6 +61,8 @@ class IntValue: public Value
 Int toInt(const Value::ptr &value)
     throw(BadTypeTagError);
 
+std::ostream & operator<<(std::ostream &os, const IntValue& value);
+
 } // end of namespace
 
 #endif // include guard

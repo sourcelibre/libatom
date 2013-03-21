@@ -43,7 +43,7 @@ namespace atom {
 
 typedef std::vector<Value::ptr> Message;
 
-std::ostream & operator<<(std::ostream &os, const Message& message);
+std::ostream & operator<<(std::ostream &os, const std::vector<Value::ptr>& message);
 std::ostream & operator<<(std::ostream &os, const Value& value);
 std::ostream & operator<<(std::ostream &os, const std::map<std::string, Value::ptr>& map);
 

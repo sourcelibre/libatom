@@ -17,44 +17,38 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * The PointerValue class.
- */
-
-#ifndef __ATOM_POINTERVALUE_H__
-#define __ATOM_POINTERVALUE_H__
-
-#include "atom/value.h"
+#include "atom/pointervalue.h"
 
 namespace atom {
 
-/**
- * Base class for objects to store in a PointerValue.
- * Extend this class to store data into PointerValue
- */
-class AbstractObject
-{
-    public:
-        typedef std::tr1::shared_ptr<AbstractObject> ptr;
-};
+PointerValue::PointerValue(AbstractObject::ptr &value) :
+    value_(value)
+{}
 
-/**
- * Stores a shared pointer to a child of the AbstractObject class.
- */
-class PointerValue: public Value
+void PointerValue::setPointer(AbstractObject::ptr &value)
 {
-    public:
-        typedef std::tr1::shared_ptr<PointerValue> ptr;
-        static const char TYPE_TAG = 'P';
-        PointerValue(AbstractObject::ptr &value);
-        void setPointer(AbstractObject::ptr &value);
-        const AbstractObject::ptr & getPointer() const;
-        static Value::ptr create(AbstractObject::ptr value);
-        static PointerValue::ptr convert(Value::ptr from);
-    private:
-        AbstractObject::ptr value_;
-        virtual char doGetTypeTag() const;
-};
+    this->value_ = value;
+}
+
+const AbstractObject::ptr & PointerValue::getPointer() const
+{
+    return value_;
+}
+
+Value::ptr PointerValue::create(AbstractObject::ptr value)
+{
+    return Value::ptr(new PointerValue(value));
+}
+
+PointerValue::ptr PointerValue::convert(Value::ptr from)
+{
+    return std::tr1::dynamic_pointer_cast<PointerValue>(from);
+}
+
+char PointerValue::doGetTypeTag() const
+{
+    return TYPE_TAG;
+}
 
 std::ostream & operator<<(std::ostream &os, const PointerValue& value)
 {
@@ -66,6 +60,4 @@ std::ostream & operator<<(std::ostream &os, const PointerValue& value)
 }
 
 } // end of namespace
-
-#endif // include guard
 

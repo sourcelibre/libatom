@@ -33,24 +33,15 @@ class NullValue: public Value
     public:
         typedef std::tr1::shared_ptr<NullValue> ptr;
         static const char TYPE_TAG = 'N';
-        static Value::ptr create()
-        {
-            NullValue::ptr ret(new NullValue());
-            return std::tr1::static_pointer_cast<Value>(ret);
-        }
-        static NullValue::ptr convert(const Value::ptr &from)
-        {
-            return std::tr1::dynamic_pointer_cast<NullValue>(from);
-        }
+        static Value::ptr create();
+        static NullValue::ptr convert(const Value::ptr &from);
     private:
         std::string value_;
-        NullValue()
-        {}
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        NullValue();
+        virtual char doGetTypeTag() const;
 };
+
+std::ostream & operator<<(std::ostream &os, const NullValue& value);
 
 } // end of namespace
 

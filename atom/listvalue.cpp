@@ -17,17 +17,46 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * Provides version info for libatom.
- */
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#include "atom/listvalue.h"
 
 namespace atom {
 
-const char * const VERSION = "@PACKAGE_VERSION@";
+ListValue::ListValue(const std::vector<Value::ptr> &value) :
+    value_(value)
+{}
+
+void ListValue::setList(const std::vector<Value::ptr> &value)
+{
+    this->value_ = value;
+}
+
+const std::vector<Value::ptr> & ListValue::getList() const
+{
+    return value_;
+}
+
+static Value::ptr ListValue::create(std::vector<Value::ptr> value)
+{
+    return Value::ptr(new ListValue(value));
+}
+
+static ListValue::ptr ListValue::convert(Value::ptr from)
+{
+    return std::tr1::dynamic_pointer_cast<ListValue>(from);
+}
+
+char ListValue::doGetTypeTag() const
+{
+    return TYPE_TAG;
+}
+
+std::ostream & operator<<(std::ostream &os, const ListValue& value)
+{
+	os << value.getList();
+    return os;
+}
 
 } // end of namespace
 
-#endif // __VERSION_H__
+#endif // include guard
 

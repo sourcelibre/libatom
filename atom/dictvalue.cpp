@@ -17,37 +17,39 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** @file
- * The DictValue class.
- */
-
-#ifndef __ATOM_DICTVALUE_H__
-#define __ATOM_DICTVALUE_H__
-
-#include <map>
-#include <string>
-#include "atom/value.h"
+#include "atom/dictvalue.h"
 
 namespace atom {
 
-/**
- * Stores a map of strings to shared pointers to Value instances.
- */
-class DictValue: public Value
-{
-    public:
-        typedef std::tr1::shared_ptr<DictValue> ptr;
-        static const char TYPE_TAG = 'D';
+DictValue::DictValue(const std::map<std::string, Value::ptr> &value) :
+    value_(value)
+{}
 
-        DictValue(const std::map<std::string, Value::ptr> &value);
-        void setMap(const std::map<std::string, Value::ptr> &value);
-        const std::map<std::string, Value::ptr> & getMap() const;
-        static Value::ptr create(std::map<std::string, Value::ptr> &value);
-        static DictValue::ptr convert(Value::ptr from);
-    private:
-        std::map<std::string, Value::ptr> value_;
-        virtual char doGetTypeTag() const;
-};
+void DictValue::setMap(const std::map<std::string, Value::ptr> &value)
+{
+    this->value_ = value;
+}
+
+const std::map<std::string, Value::ptr> & DictValue::getMap() const
+{
+    return value_;
+}
+
+static Value::ptr DictValue::create(std::map<std::string, Value::ptr> &value)
+{
+    DictValue::ptr ret(new DictValue(value));
+    return std::tr1::static_pointer_cast<Value>(ret);
+}
+
+static DictValue::ptr DictValue::convert(Value::ptr from)
+{
+    return std::tr1::dynamic_pointer_cast<DictValue>(from);
+}
+
+virtual char DictValue::doGetTypeTag() const
+{
+    return TYPE_TAG;
+}
 
 std::ostream & operator<<(std::ostream &os, const DictValue& value)
 {

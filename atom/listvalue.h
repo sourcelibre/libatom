@@ -37,32 +37,17 @@ class ListValue: public Value
     public:
         typedef std::tr1::shared_ptr<ListValue> ptr;
         static const char TYPE_TAG = 'L';
-        ListValue(const std::vector<Value::ptr> &value) :
-            value_(value)
-        {}
-        void setList(const std::vector<Value::ptr> &value)
-        {
-            this->value_ = value;
-        }
-        std::vector<Value::ptr> & getList()
-        {
-            return value_;
-        }
-        static Value::ptr create(std::vector<Value::ptr> value)
-        {
-            return Value::ptr(new ListValue(value));
-        }
-        static ListValue::ptr convert(Value::ptr from)
-        {
-            return std::tr1::dynamic_pointer_cast<ListValue>(from);
-        }
+        ListValue(const std::vector<Value::ptr> &value);
+        void setList(const std::vector<Value::ptr> &value);
+        const std::vector<Value::ptr> & getList() const;
+        static Value::ptr create(std::vector<Value::ptr> value);
+        static ListValue::ptr convert(Value::ptr from);
     private:
         std::vector<Value::ptr> value_;
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        virtual char doGetTypeTag() const;
 };
+
+std::ostream & operator<<(std::ostream &os, const ListValue& value);
 
 } // end of namespace
 

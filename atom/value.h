@@ -28,6 +28,8 @@
 
 namespace atom {
 
+typedef char TypeTag;
+
 /**
  * Generic container for data.
  */
@@ -35,7 +37,8 @@ class Value
 {
     public:
         typedef std::tr1::shared_ptr<Value> ptr;
-        char getTypeTag() const;
+
+        TypeTag getTypeTag() const;
         bool isType(char type_tag) const;
         virtual ~Value() {}
     private:
