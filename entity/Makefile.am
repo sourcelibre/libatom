@@ -1,11 +1,15 @@
 SUBDIRS = tests
 
 AM_CXXFLAGS = \
-    -I$(top_srcdir)
+    -I$(top_srcdir) \
+    $(SIGC_CFLAGS) \
+    $(LOG4CPP_CFLAGS)
 
 # XXX BOOST_FILESYSTEM_LIBS must be after BOOST_SYSTEM_LIBS
 
-AM_LIBS = 
+AM_LIBS = \
+    $(SIGC_LIBS) \
+    $(LOG4CPP_LIBS)
 
 # this file is not installed, just included by .cpp files at compile time.
 EXTRA_DIST = config.h
@@ -27,10 +31,14 @@ libentity_@ENTITY_API_VERSION@_la_includedir = $(includedir)/entity-$(ENTITY_API
 ## and the variable name derived from that.
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libentity_@ENTITY_API_VERSION@_la_SOURCES = \
-    hello.cpp
+    hello.cpp \
+    logger.cpp \
+    namedobject.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libentity_@ENTITY_API_VERSION@_la_include_HEADERS = \
     hello.h \
+    logger.h \
+    namedobject.h \
     version.h
 

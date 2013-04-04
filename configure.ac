@@ -74,6 +74,12 @@ if test "x${have_sigc}" = "xfalse" ; then
     AC_MSG_ERROR([Missing libsig++-2.0])
 fi
 
+# log4cpp
+PKG_CHECK_MODULES([LOG4CPP], [log4cpp], have_log4cpp=true, have_log4cpp=false)
+if test "x${have_log4cpp}" = "xfalse" ; then
+    AC_MSG_ERROR([missing package: liblog4cpp5-dev])
+fi
+
 # Override the template file name of the generated .pc file, so that there
 # is no need to rename the template file when the API version changes.
 AC_CONFIG_FILES([
