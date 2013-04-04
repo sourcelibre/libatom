@@ -18,39 +18,40 @@
  */
 
 /** @file
- * The Message typedef
+ * The BadTypeTagError class.
  */
 
-#ifndef __ATOM_MESSAGE_H__
-#define __ATOM_MESSAGE_H__
+#ifndef __ATOM_EXCEPTIONS_H__
+#define __ATOM_EXCEPTIONS_H__
 
-#include "atom/value.h"
-#include "atom/blobvalue.h"
-#include "atom/intvalue.h"
-#include "atom/floatvalue.h"
-#include "atom/stringvalue.h"
-#include "atom/listvalue.h"
-#include "atom/booleanvalue.h"
-#include "atom/nullvalue.h"
-#include "atom/dictvalue.h"
-#include "atom/pointervalue.h"
-#include <vector>
-#include <map>
-#include <string>
-#include <ostream>
+#include <stdexcept>
 
 namespace atom {
 
-typedef std::vector<Value::ptr> Message;
+/**
+ * Base class for errors.
+ */
+class BaseException : public std::runtime_error
+{
+    public:
+        BaseException(const char *error_message) :
+            std::runtime_error(error_message)
+        {}
+        BaseException() :
+            std::runtime_error("")
+        {}
+};
 
-std::ostream & operator<<(std::ostream &os, const Message& message);
-std::ostream & operator<<(std::ostream &os, const Value& value);
-std::ostream & operator<<(std::ostream &os, const std::map<std::string, Value::ptr>& map);
-
-std::string getTypeTags(const Message &message);
-
-Message createMessage(const char *types, ...)
-    throw(BadTypeTagError);
+/**
+ * Error when type tag is not what is expected.
+ */
+class BadTypeTagError : public BaseException
+{
+    public:
+        BadTypeTagError(const char *error_message) :
+            BaseException(error_message)
+        {}
+};
 
 } // end of namespace
 

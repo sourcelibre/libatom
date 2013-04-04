@@ -23,6 +23,11 @@
 #ifndef __VERSION_H__
 #define __VERSION_H__
 
-const char * const ATOM_VERSION = "@PACKAGE_VERSION@";
+namespace atom {
+
+const char * const VERSION = "@PACKAGE_VERSION@";
+
+} // end of namespace
 
 #endif // __VERSION_H__
+

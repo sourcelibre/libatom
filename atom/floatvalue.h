@@ -24,42 +24,39 @@
 #ifndef __ATOM_FLOATVALUE_H__
 #define __ATOM_FLOATVALUE_H__
 
+#include <limits>
+#include <sstream>
 #include "atom/value.h"
+#include "atom/exceptions.h"
 
 namespace atom {
+
+typedef double Float;
 
 class FloatValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<FloatValue> ptr;
         static const char TYPE_TAG = 'f';
-        void setFloat(double value)
-        {
-            this->value_ = value;
-        }
-        double getFloat() const
-        {
-            return value_;
-        }
-        static Value::ptr create(double value)
-        {
-            FloatValue::ptr ret(new FloatValue(value));
-            return std::tr1::static_pointer_cast<Value>(ret);
-        }
-        static FloatValue::ptr convert(const Value::ptr &from)
-        {
-            return std::tr1::dynamic_pointer_cast<FloatValue>(from);
-        }
+        bool setFloat(Float value);
+        Float getFloat() const;
+        static Value::ptr create(Float value);
+        static FloatValue::ptr convert(const Value::ptr &from);
+        bool setRange(Float minimum, Float maximum);
+        bool setMax(Float maximum);
+        bool setMin(Float minimum);
+        Float getMax() const;
+        Float getMin() const;
     private:
-        double value_;
-        FloatValue(double value) :
-            value_(value)
-        {}
-        virtual char doGetTypeTag() const
-        {
-            return TYPE_TAG;
-        }
+        Float value_;
+        Float max_;
+        Float min_;
+        FloatValue(Float value);
+        virtual char doGetTypeTag() const;
 };
+
+Float toFloat(const Value::ptr &value)
+    throw(BadTypeTagError);
 
 } // end of namespace
 

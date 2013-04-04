@@ -3,7 +3,6 @@
 #include "atom/message.h"
 
 using namespace atom;
-
 static const bool VERBOSE = true;
 
 class Dummy : public AbstractObject
@@ -24,7 +23,11 @@ class Dummy : public AbstractObject
 
 bool check_messages()
 {
+    Byte blobstring[] = "this is a blob";
+    Byte blobstring2[] = "this is a larger blob that contains a string.";
+
     std::vector<Value::ptr> message;
+    message.push_back(BlobValue::create(blobstring, sizeof(blobstring)));
     message.push_back(IntValue::create(2));
     message.push_back(FloatValue::create(3.14159));
     message.push_back(StringValue::create("hello"));
@@ -45,7 +48,17 @@ bool check_messages()
     map["egg"] = StringValue::create("hi");
     map["spam"] = BooleanValue::create(false);
     map["ham"] = NullValue::create();
+    map["blob_empty_1"] = BlobValue::create();
+    map["blob_empty_2"] = BlobValue::create();
+    map["blob_with_text"] = BlobValue::create(blobstring, sizeof(blobstring));
+    map["blob_with_larger_text"] = BlobValue::create(blobstring2, sizeof(blobstring2));
     message.push_back(DictValue::create(map));
+
+    if (map != map)
+    {
+        std::cout << "The two maps don't match!" << std::endl;
+        return false;
+    }
 
     message.push_back(PointerValue::create(std::tr1::dynamic_pointer_cast<AbstractObject>(Dummy::ptr(new Dummy()))));
     
@@ -60,9 +73,49 @@ bool check_messages()
     return true;
 }
 
+bool check_range()
+{
+    std::vector<Value::ptr> message;
+    message.push_back(IntValue::create(2));
+    message.push_back(FloatValue::create(3.14159));
+    
+    IntValue::ptr i = IntValue::convert(message[0]);
+    FloatValue::ptr f = FloatValue::convert(message[1]);
+
+    if (VERBOSE)
+    {
+        std::cout << "Float range: [" << f->getMin() << ", " << f->getMax() << "]" << std::endl;
+        std::cout << "Int   range: [" << i->getMin() << ", " << i->getMax() << "]" << std::endl;
+    }
+
+    i->setRange(1, 100);
+    if (i->setInt(200))
+    {
+        std::cout << "Could setInt even though not within range." << std::endl;
+        return false;
+    }
+
+    f->setRange(1.0, 100.0);
+    if (f->setFloat(200.0))
+    {
+        std::cout << "Could setFloat even though not within range." << std::endl;
+        return false;
+    }
+    
+    f->setFloat(10.0);
+    if (f->getFloat() != 10.0)
+    {
+        std::cout << "Float stored doesn't match expected." << std::endl;
+        return false;
+    }
+    return true;
+}
+
 int main(int /* argc */, char ** /* argv */)
 {
     if (! check_messages())
+        return 1;
+    if (! check_range())
         return 1;
     return 0;
 }

@@ -1,3 +1,4 @@
+.*.swp
 .deps
 .libs
 Makefile
@@ -6,11 +7,13 @@ Makefile.in
 *.la
 *.o
 *.lo
-*
 *.pc
 aclocal.m4
 atom/config.h
 stamp-h1
+atom/config.h.in
+atom/tests/check_blob
+atom/tests/check_values
 atom/version.h
 autom4te.cache
 confdefs.h
