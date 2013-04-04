@@ -18,11 +18,11 @@
  */
 
 /** @file
- * Provides version info for libatom.
+ * Provides version info for libentity.
  */
 #ifndef __VERSION_H__
 #define __VERSION_H__
 
-const char * const ATOM_VERSION = "@PACKAGE_VERSION@";
+const char * const ENTITY_VERSION = "@PACKAGE_VERSION@";
 
 #endif // __VERSION_H__

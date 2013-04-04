@@ -40,3 +40,5 @@ missing
 !examples/simple/Makefile
 !atom
 !prototypes
+entity/version.h
+examples/simple/run

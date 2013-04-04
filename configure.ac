@@ -68,6 +68,12 @@ if test "x${have_liblo}" = "xfalse" ; then
     AC_MSG_ERROR([Missing liblo])
 fi
 
+#Check for sigc with pkg-config
+PKG_CHECK_MODULES(SIGC, sigc++-2.0, have_sigc=true, have_sigc=false)
+if test "x${have_sigc}" = "xfalse" ; then
+    AC_MSG_ERROR([Missing libsig++-2.0])
+fi
+
 # Override the template file name of the generated .pc file, so that there
 # is no need to rename the template file when the API version changes.
 AC_CONFIG_FILES([
