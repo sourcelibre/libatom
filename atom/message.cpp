@@ -58,7 +58,7 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     }
     else if (value->getTypeTag() == PointerValue::TYPE_TAG)
     {
-        os << PointerValue::convert(value)->getPointer().get();
+        os << "*" << PointerValue::convert(value)->getPointer().get();
     }
     else if (value->getTypeTag() == DictValue::TYPE_TAG)
     {
@@ -67,8 +67,7 @@ std::ostream & operator<<(std::ostream &os, const Value::ptr& value)
     }
     else if (value->getTypeTag() == BlobValue::TYPE_TAG)
     {
-        char * tmp = BlobValue::convert(value)->getValue();
-        os << &tmp; // prints the pointer!
+        os << *(BlobValue::convert(value).get());
     }
     else
     {

@@ -25,6 +25,7 @@
 #define __ATOM_BLOBVALUE_H__
 
 #include <string>
+#include <ostream>
 #include "atom/value.h"
 #include "atom/blob.h"
 
@@ -38,20 +39,56 @@ class BlobValue: public Value
     public:
         typedef std::tr1::shared_ptr<BlobValue> ptr;
         static const char TYPE_TAG = 'B';
-        void setValue(const char * value, size_t length);
-        // TODO: const
-        char * getValue();
+        void setValue(const Byte * value, size_t length);
+        /**
+         * Returns the actual bytes data.
+         * Use at your own risk, since this pointer points to internal data in this class.
+         */
+        Byte * getValue();
+        /**
+         * Zeros the bytes, frees them, and make the size 0.
+         */
         void clear();
-        static Value::ptr create(const char * value, size_t length);
+        /**
+         * Factory with some data to fill it up with.
+         */
+        static Value::ptr create(const Byte * value, size_t length);
+        /**
+         * Factory for an empty blob.
+         */
+        static Value::ptr create();
+        /**
+         * Returns the size of the data.
+         */
         size_t getSize() const;
-        void append(const char * value, size_t size);
+        /**
+         * Appends some bytes to the blob.
+         */
+        void append(const Byte * value, size_t size);
+        /**
+         * Converts from a Value::ptr to a BlobValue::ptr.
+         * The Value::ptr's type must be a blob!
+         */
         static BlobValue::ptr convert(const Value::ptr &from);
+        /**
+         * Returns a string representing the data as hexadecimal.
+         */
+        std::string getHex() const;
+        /**
+         * Returns a reference to the internal Blob that is stored in this BlobValue.
+         */
+        const Blob& getBlob() const;
+
+        bool operator==(const BlobValue &other) const;
+        bool operator!=(const BlobValue &other) const;
 
     private:
         Blob blob_;
-        BlobValue(const char *value, size_t size);
+        BlobValue(const Byte *value, size_t size);
         virtual char doGetTypeTag() const;
 };
+
+std::ostream &operator<<(std::ostream &os, const BlobValue &value);
 
 } // end of namespace
 

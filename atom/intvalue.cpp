@@ -26,7 +26,7 @@
 
 namespace atom {
 
-bool IntValue::setInt(long long value)
+bool IntValue::setInt(Int value)
 {
     if (value > this->max_)
         return false;
@@ -35,11 +35,11 @@ bool IntValue::setInt(long long value)
     this->value_ = value;
     return true;
 }
-long long IntValue::getInt() const
+Int IntValue::getInt() const
 {
     return value_;
 }
-Value::ptr IntValue::create(long long value)
+Value::ptr IntValue::create(Int value)
 {
     IntValue::ptr ret(new IntValue(value));
     return std::tr1::static_pointer_cast<Value>(ret);
@@ -48,7 +48,7 @@ IntValue::ptr IntValue::convert(const Value::ptr &from)
 {
     return std::tr1::dynamic_pointer_cast<IntValue>(from);
 }
-bool IntValue::setRange(long long minimum, long long maximum)
+bool IntValue::setRange(Int minimum, Int maximum)
 {
     if (! this->setMin(minimum))
         return false;
@@ -56,50 +56,50 @@ bool IntValue::setRange(long long minimum, long long maximum)
         return false;
     return true;
 }
-bool IntValue::setMax(long long maximum)
+bool IntValue::setMax(Int maximum)
 {
-    if (maximum > std::numeric_limits<long long>::max())
+    if (maximum > std::numeric_limits<Int>::max())
         return false;
     this->max_ = maximum;
     return true;
 }
-bool IntValue::setMin(long long minimum)
+bool IntValue::setMin(Int minimum)
 {
-    if (minimum < std::numeric_limits<long long>::min())
+    if (minimum < std::numeric_limits<Int>::min())
         return false;
     this->min_ = minimum;
     return true;
 }
-long long IntValue::getMax() const
+Int IntValue::getMax() const
 {
     return this->max_;
 }
-long long IntValue::getMin() const
+Int IntValue::getMin() const
 {
     return this->min_;
 }
-IntValue::IntValue(long long value) :
+IntValue::IntValue(Int value) :
     value_(value)
 {
-    this->min_ = std::numeric_limits<long long>::min();
-    this->max_ = std::numeric_limits<long long>::max();
+    this->min_ = std::numeric_limits<Int>::min();
+    this->max_ = std::numeric_limits<Int>::max();
 }
 char IntValue::doGetTypeTag() const
 {
     return TYPE_TAG;
 }
 
-long long toInt(const Value::ptr &value)
+Int toInt(const Value::ptr &value)
     throw(BadTypeTagError)
 {
-    long long v;
+    Int v;
     if (value->getTypeTag() == IntValue::TYPE_TAG)
     {
         v = IntValue::convert(value)->getInt();
     }
     else if (value->getTypeTag() == FloatValue::TYPE_TAG)
     {
-        v = (long long)(FloatValue::convert(value)->getFloat());
+        v = (Int)(FloatValue::convert(value)->getFloat());
     }
     else
     {

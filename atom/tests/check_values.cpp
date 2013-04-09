@@ -23,7 +23,8 @@ class Dummy : public AbstractObject
 
 bool check_messages()
 {
-    char blobstring[] = "this is a blob";
+    Byte blobstring[] = "this is a blob";
+    Byte blobstring2[] = "this is a larger blob that contains a string.";
 
     std::vector<Value::ptr> message;
     message.push_back(BlobValue::create(blobstring, sizeof(blobstring)));
@@ -47,7 +48,17 @@ bool check_messages()
     map["egg"] = StringValue::create("hi");
     map["spam"] = BooleanValue::create(false);
     map["ham"] = NullValue::create();
+    map["blob_empty_1"] = BlobValue::create();
+    map["blob_empty_2"] = BlobValue::create();
+    map["blob_with_text"] = BlobValue::create(blobstring, sizeof(blobstring));
+    map["blob_with_larger_text"] = BlobValue::create(blobstring2, sizeof(blobstring2));
     message.push_back(DictValue::create(map));
+
+    if (map != map)
+    {
+        std::cout << "The two maps don't match!" << std::endl;
+        return false;
+    }
 
     message.push_back(PointerValue::create(std::tr1::dynamic_pointer_cast<AbstractObject>(Dummy::ptr(new Dummy()))));
     

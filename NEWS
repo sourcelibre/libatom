@@ -1,6 +1,22 @@
 Libatom release NEWS
 ====================
 
+2013-04-09 libatom 0.2.4
+------------------------
+This release is an official release in the 0.2 stable series.
+
+New Features:
+
+* add operators ==, !=, ostream<< for blob
+* pretty print blobs
+* add factory for empty blob
+* add typedefs for int and float
+
+Bug fixes:
+
+* use unsigned char for blob bytes
+
+
 2013-02-13 libatom 0.2.2
 ------------------------
 This release is an official release in the 0.2 stable series.

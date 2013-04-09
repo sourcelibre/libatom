@@ -1,7 +1,8 @@
 #include "atom/blob.h"
 #include <iostream>
+#include <string>
 
-void debugText(const char *text, size_t size)
+void debugText(const atom::Byte *text, size_t size)
 {
     std::cout << "appending : ";
     for (size_t i = 0; i < size; i++)
@@ -15,10 +16,10 @@ bool check_blob()
 {
     atom::Blob *blob = new atom::Blob;
 
-    char foo[] = { 'f', 'o', 'o' };
-    char bar[] = { 'b', 'a', 'r' };
-    char egg[] = { 'e', 'g', 'g' };
-    char spam[] = { 's', 'p', 'a', 'm' };
+    atom::Byte foo[] = { 'f', 'o', 'o' };
+    atom::Byte bar[] = { 'b', 'a', 'r' };
+    atom::Byte egg[] = { 'e', 'g', 'g' };
+    atom::Byte spam[] = { 's', 'p', 'a', 'm' };
 
     blob->debugPrint();
     debugText(foo, sizeof(foo));

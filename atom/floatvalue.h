@@ -31,29 +31,31 @@
 
 namespace atom {
 
+typedef double Float;
+
 class FloatValue: public Value
 {
     public:
         typedef std::tr1::shared_ptr<FloatValue> ptr;
         static const char TYPE_TAG = 'f';
-        bool setFloat(double value);
-        double getFloat() const;
-        static Value::ptr create(double value);
+        bool setFloat(Float value);
+        Float getFloat() const;
+        static Value::ptr create(Float value);
         static FloatValue::ptr convert(const Value::ptr &from);
-        bool setRange(double minimum, double maximum);
-        bool setMax(double maximum);
-        bool setMin(double minimum);
-        double getMax() const;
-        double getMin() const;
+        bool setRange(Float minimum, Float maximum);
+        bool setMax(Float maximum);
+        bool setMin(Float minimum);
+        Float getMax() const;
+        Float getMin() const;
     private:
-        double value_;
-        double max_;
-        double min_;
-        FloatValue(double value);
+        Float value_;
+        Float max_;
+        Float min_;
+        FloatValue(Float value);
         virtual char doGetTypeTag() const;
 };
 
-double toFloat(const Value::ptr &value)
+Float toFloat(const Value::ptr &value)
     throw(BadTypeTagError);
 
 } // end of namespace

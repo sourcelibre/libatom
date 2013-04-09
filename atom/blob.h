@@ -25,8 +25,11 @@
 #define __ATOM_BLOB_H__
 
 #include <cstddef>
+#include <string>
 
 namespace atom {
+
+typedef unsigned char Byte;
 
 /**
  * Dynamic-size binary large object.
@@ -44,7 +47,7 @@ class Blob
         /**
          * Appends a single byte to the large object.
          */
-        void append(char data);
+        void append(Byte data);
         /**
          * Appends some bytes to the large object.
          *
@@ -55,7 +58,7 @@ class Blob
          * try to use sizeof() is often with a character string, and a char
          * is always one byte long. An int, however, will be something different.
          */
-        void append(const char *data, size_t length);
+        void append(const Byte *data, size_t length);
         /**
          * Returns the number of bytes stored.
          */
@@ -72,18 +75,22 @@ class Blob
         /**
          * Retrieves the pointer to the bytes.
          */
-        char * get() const;
+        Byte * get() const;
         /**
          * Prints potentially usefull - but very verbose - information about
          * this blob.
          */
         void debugPrint() const;
         static size_t findNextLargerPowerOfTwo(size_t n);
-        void setValue(const char *data, size_t length);
+        void setValue(const Byte *data, size_t length);
         static std::string getString(atom::Blob &blob, size_t max_length=1000);
-        static std::string getHexadecimalString(atom::Blob &blob, size_t max_length=1000, bool use_space=true, bool use_columns=true, size_t columns=24);
+        static std::string getHexadecimalString(const atom::Blob &blob, size_t max_length=1000, bool use_space=true, bool use_columns=true, size_t columns=24);
+
+        bool operator==(const Blob &other) const;
+        bool operator!=(const Blob &other) const;
+
     private:
-        char *value_;
+        Byte *value_;
         size_t size_;
         size_t allocated_;
         // should be a power of two
@@ -94,6 +101,8 @@ class Blob
         size_t findSizeToStore(size_t target);
         void increaseSize(size_t length);
 };
+
+std::ostream &operator<<(std::ostream &os, const Blob &blob);
 
 } // end of namespace
 

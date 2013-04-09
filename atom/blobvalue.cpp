@@ -21,17 +21,17 @@
 
 namespace atom {
 
-void BlobValue::setValue(const char * value, size_t length)
+void BlobValue::setValue(const Byte * value, size_t length)
 {
     blob_.setValue(value, length);
 }
 
-void BlobValue::append(const char * value, size_t length)
+void BlobValue::append(const Byte * value, size_t length)
 {
     blob_.append(value, length);
 }
 
-char * BlobValue::getValue()
+Byte * BlobValue::getValue()
 {
     return blob_.get();
 }
@@ -46,9 +46,16 @@ void BlobValue::clear()
     return blob_.clear();
 }
 
-Value::ptr BlobValue::create(const char * value, size_t length)
+Value::ptr BlobValue::create(const Byte * value, size_t length)
 {
     BlobValue::ptr ret(new BlobValue(value, length));
+    return std::tr1::static_pointer_cast<Value>(ret);
+}
+
+Value::ptr BlobValue::create()
+{
+    Byte *empty = NULL;
+    BlobValue::ptr ret(new BlobValue(empty, 0));
     return std::tr1::static_pointer_cast<Value>(ret);
 }
 
@@ -57,7 +64,7 @@ BlobValue::ptr BlobValue::convert(const Value::ptr &from)
     return std::tr1::dynamic_pointer_cast<BlobValue>(from);
 }
 
-BlobValue::BlobValue(const char *value, size_t length)
+BlobValue::BlobValue(const Byte *value, size_t length)
 {
     blob_.setValue(value, length);
 }
@@ -65,6 +72,35 @@ BlobValue::BlobValue(const char *value, size_t length)
 char BlobValue::doGetTypeTag() const
 {
     return TYPE_TAG;
+}
+
+std::string BlobValue::getHex() const
+{
+    static const size_t MAX_LENGTH = 20;
+    static const bool USE_SPACES = false;
+    static const bool USE_COLS = false;
+    return Blob::getHexadecimalString(this->blob_, MAX_LENGTH, USE_SPACES, USE_COLS);
+}
+
+const Blob& BlobValue::getBlob() const
+{
+    return blob_;
+}
+
+std::ostream &operator<<(std::ostream &os, const BlobValue &value)
+{
+    os << value.getBlob();
+    return os;
+}
+
+bool BlobValue::operator==(const BlobValue &other) const
+{
+    return this->blob_ == other.getBlob();
+}
+
+bool BlobValue::operator!=(const BlobValue &other) const
+{
+    return this->blob_ != other.getBlob();
 }
 
 } // end of namespace
