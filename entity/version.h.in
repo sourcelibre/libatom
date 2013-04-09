@@ -20,9 +20,13 @@
 /** @file
  * Provides version info for libentity.
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#ifndef __ENTITY_VERSION_H__
+#define __ENTITY_VERSION_H__
 
-const char * const ENTITY_VERSION = "@PACKAGE_VERSION@";
+namespace entity {
+
+const char * const VERSION = "@PACKAGE_VERSION@";
+
+} // end of namespace
 
 #endif // __VERSION_H__

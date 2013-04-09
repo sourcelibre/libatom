@@ -31,13 +31,13 @@ libentity_@ENTITY_API_VERSION@_la_includedir = $(includedir)/entity-$(ENTITY_API
 ## and the variable name derived from that.
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libentity_@ENTITY_API_VERSION@_la_SOURCES = \
-    hello.cpp \
     logger.cpp \
+    documented.cpp \
     namedobject.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libentity_@ENTITY_API_VERSION@_la_include_HEADERS = \
-    hello.h \
+    documented.h \
     logger.h \
     namedobject.h \
     version.h

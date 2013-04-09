@@ -20,8 +20,8 @@
 /** @file
  * Provides version info for libatom.
  */
-#ifndef __VERSION_H__
-#define __VERSION_H__
+#ifndef __ATOM_VERSION_H__
+#define __ATOM_VERSION_H__
 
 namespace atom {
 
