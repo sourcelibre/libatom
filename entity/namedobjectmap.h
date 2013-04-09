@@ -22,8 +22,8 @@
  * @file
  * The NamedObjectMap template class.
  */
-#ifndef __TEMPI_NAMEDOBJECTMAP_H__
-#define __TEMPI_NAMEDOBJECTMAP_H__
+#ifndef __ENTITY_NAMEDOBJECTMAP_H__
+#define __ENTITY_NAMEDOBJECTMAP_H__
 
 #include <map>
 #include <vector>

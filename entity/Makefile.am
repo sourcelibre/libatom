@@ -31,12 +31,22 @@ libentity_@ENTITY_API_VERSION@_la_includedir = $(includedir)/entity-$(ENTITY_API
 ## and the variable name derived from that.
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libentity_@ENTITY_API_VERSION@_la_SOURCES = \
+    attribute.cpp \
+    entity.cpp \
+    entitymethod.cpp \
+    entitysignal.cpp \
     logger.cpp \
     documented.cpp \
     namedobject.cpp
 
 ## PLEASE KEEP THEM IN ALPHABETICAL ORDER
 libentity_@ENTITY_API_VERSION@_la_include_HEADERS = \
+    attribute.h \
+    entity.h \
+    entitymethod.h \
+    entitysignal.h \
+    exceptions.h \
+    namedobjectmap.h \
     documented.h \
     logger.h \
     namedobject.h \

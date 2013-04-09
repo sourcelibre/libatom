@@ -22,8 +22,8 @@
  * The Named class.
  */
 
-#ifndef __TEMPI_NAMEDOBJECT_H__
-#define __TEMPI_NAMEDOBJECT_H__
+#ifndef __ENTITY_NAMEDOBJECT_H__
+#define __ENTITY_NAMEDOBJECT_H__
 
 #include <string>
 #include <tr1/memory>
