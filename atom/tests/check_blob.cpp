@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+static const bool VERBOSE = false;
+
 void debugText(const atom::Byte *text, size_t size)
 {
     std::cout << "appending : ";
@@ -21,25 +23,41 @@ bool check_blob()
     atom::Byte egg[] = { 'e', 'g', 'g' };
     atom::Byte spam[] = { 's', 'p', 'a', 'm' };
 
-    blob->debugPrint();
-    debugText(foo, sizeof(foo));
+    if (VERBOSE)
+    {
+        blob->debugPrint();
+        debugText(foo, sizeof(foo));
+    }
+
     blob->append(foo, sizeof(foo));
-    blob->debugPrint();
-    debugText(bar, sizeof(bar));
+    if (VERBOSE)
+    {
+        blob->debugPrint();
+        debugText(bar, sizeof(bar));
+    }
+
     blob->append(bar, sizeof(bar));
-    blob->debugPrint();
-    debugText(egg, sizeof(egg));
+    if (VERBOSE)
+    {
+        blob->debugPrint();
+        debugText(egg, sizeof(egg));
+    }
+
     blob->append(egg, sizeof(egg));
     blob->append('x');
-    blob->debugPrint();
-    debugText(spam, sizeof(spam));
+    if (VERBOSE)
+    {
+        blob->debugPrint();
+        debugText(spam, sizeof(spam));
+    }
+
     blob->append(spam, sizeof(spam));
-    blob->debugPrint();
-
-    std::cout << "text: " << blob->get() << std::endl;
-
+    if (VERBOSE)
+    {
+        blob->debugPrint();
+        std::cout << "text: " << blob->get() << std::endl;
+    }
     delete blob;
-    
     return true;
 }
 

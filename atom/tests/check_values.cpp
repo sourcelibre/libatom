@@ -3,7 +3,7 @@
 #include "atom/message.h"
 
 using namespace atom;
-static const bool VERBOSE = true;
+static const bool VERBOSE = false;
 
 class Dummy : public AbstractObject
 {
