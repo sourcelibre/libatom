@@ -5,6 +5,7 @@ AM_CXXFLAGS = \
     $(SIGC_CFLAGS) \
     $(LOG4CPP_CFLAGS)
 
+
 # XXX BOOST_FILESYSTEM_LIBS must be after BOOST_SYSTEM_LIBS
 
 AM_LIBS = \
@@ -24,6 +25,9 @@ libentity_@ENTITY_API_VERSION@_la_LDFLAGS = -export-dynamic -version-info $(ENTI
 libentity_@ENTITY_API_VERSION@_la_LIBS = $(AM_LIBS)
 libentity_@ENTITY_API_VERSION@_la_CXXFLAGS = $(AM_CXXFLAGS)
 libentity_@ENTITY_API_VERSION@_la_includedir = $(includedir)/entity-$(ENTITY_API_VERSION)/entity
+
+libentity_@ENTITY_API_VERSION@_la_LIBADD = \
+	$(top_builddir)/atom/libatom-@ATOM_API_VERSION@.la
 
 ## Define the source file list for the "libatom-@ATOM_API_VERSION@.la"
 ## target.  Note that @ATOM_API_VERSION@ is not interpreted by Automake and
